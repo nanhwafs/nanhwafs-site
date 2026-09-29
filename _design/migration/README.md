@@ -13,5 +13,5 @@
 ## 前提
 
 - 域名 DNS 切到 GitHub Pages 之前，这份表不生效。
-- GitHub Pages 本身做不了服务端 301，规则须放在 Cloudflare（或域名托管方）。
+- GitHub Pages 本身做不了服务端 301。仓库里已为这 17 个旧路径各放一个跳转页（`<旧路径>/index.html`：meta refresh 0 秒＋canonical＋noindex），不依赖 Cloudflare 也能接住旧链接；搜索引擎把 0 秒 meta refresh 视同永久跳转。日后若 Cloudflare 记录开橙云，可再导入 `redirects.csv` 换成真 301。
 - 旧站 8 个 `/events/*` 文章已全部在新站按年新闻馆里找到对应原文（同一 FB 源帖）。

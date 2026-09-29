@@ -93,6 +93,23 @@ section.era { max-width:960px; margin:0 auto; padding:3rem clamp(1.2rem,4vw,3rem
 .era .note a { color:var(--terracotta); font-weight:700; }
 .era .note a:hover { text-decoration:underline; }
 
+/* 延伸阅读：长篇史料收进 details，不打断年份轴 */
+details.more { margin:1rem 0 .3rem; border:1px solid var(--rule); border-radius:.5rem; background:var(--paper); }
+details.more summary { cursor:pointer; padding:.9rem 1.1rem; font-weight:700; color:var(--terracotta); font-size:.9rem; }
+details.more .more-body { padding:0 1.2rem 1.1rem; }
+details.more .more-body h4 { font-family:var(--serif); font-weight:700; color:var(--ink); font-size:1rem; margin:1.1rem 0 .5rem; }
+details.more .more-body p { font-size:.9rem; line-height:1.95; font-weight:300; margin-bottom:.7rem; text-align:justify; text-justify:inter-character; }
+details.more .src { font-size:.78rem; color:var(--muted-lt); }
+
+.plist { list-style:none; font-size:.9rem; line-height:1.95; font-weight:300; }
+.plist .py { display:inline-block; min-width:12.5em; margin-right:.8em; color:var(--muted); font-size:.82rem; }
+@media (min-width:900px) { .plist { columns:2; column-gap:2rem; } .plist li { break-inside:avoid; } }
+
+/* 校史展版：原图可点开 */
+.exhibit { display:grid; gap:1.2rem; }
+.exhibit a { display:block; background:var(--paper); border:1px solid var(--rule); padding:6px; box-shadow:0 6px 16px rgba(90,60,20,.12); }
+.exhibit figcaption { font-size:.8rem; color:var(--muted-lt); margin-top:.5rem; }
+
 @media (max-width:640px) {
   .entry { grid-template-columns:1fr; gap:.3rem; }
   .entry .yr::before { top:.55em; }
@@ -155,7 +172,34 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
   <a href="#era4">1979–2010 推陈出新</a>
   <a href="#era5">2011–2020 迈向卓越</a>
   <a href="#era6">2021–至今 初心不忘</a>
+  <a href="#principals">历任校长</a>
+  <a href="#exhibit">校史展版</a>
 </nav>
+
+<section class="era reveal" id="prologue">
+  <div class="era-head">
+    <p class="years">1903 – 1961</p>
+    <h2>垦荒与铸魂</h2>
+    <p class="en">Before Nan Hwa: Foochow Pioneers of Sitiawan</p>
+    <p class="brief">南华的故事，要从1903年363位福州先民在实兆远美那埠上岸说起。他们「先建校，后建馆」，把胶林里的血汗钱，一分一厘换成了华校的课室。</p>
+  </div>
+  <details class="more">
+    <summary>延伸阅读：实兆远福州人拓荒与华文教育百年史</summary>
+    <div class="more-body">
+      <h4>跨海远航：1903年的命运抉择</h4>
+      <p>20世纪初，霹雳州近打县的锡矿业如日中天，但随着内陆人口暴涨，粮食短缺与外汇流失问题日益严重。英殖民政府迫切需要开发农业，远离内陆且靠海的实兆远便被圈定为最理想的农耕基地。政府借鉴1901年黄乃裳在砂拉越诗巫打造「新福州」的经验，将招募目标锁定在福建北部的福州乡亲。1903年9月7日，484位垦民乘坐「宝安号」启航；航海途中霍乱爆发，最终只有363位先驱（236位男性、72位妇女及55位儿童）于9月9日抵达实兆远美那埠。这批福州先民从迈上这片土地的第一天起，就是怀着扎根定居的信念而来的。</p>
+      <h4>「三把刀」辟出「小福州」</h4>
+      <p>福州先民在美以美教会牧师柳依美（Dr. Luering）与林称美等人的带领下，进入遮天蔽日的原始森林。相传福州人靠菜刀、剪刀、剃头刀「三把刀」走天下，他们也用刀斧与犁锄，把荒山野林铲平为平地。从甘文阁、十字路与福清洋，到二条路、三条路、五条路乃至七条路（今爱大华），耕地版图不断向外延伸；随后赶上橡胶业黄金期，奠定了社群的经济根基。直到今天，实兆远同乡见面仍喜爱用「平话」交谈。</p>
+      <h4>岁时与食俗：百年未改的福州风味</h4>
+      <p>提到实兆远，人们就会联想到福州人；提到福州人，自然就会联想到红酒面线、光饼、八宝饭和福州礼饼四大经典美食，百余年来代代传承，成为维系族群记忆的舌尖纽带。实兆远福州人也完整保留了古老的婚嫁习俗：家中娶媳妇，屋檐下高挂两个粉红色灯笼，一直挂到媳妇顺利诞下男儿方可取下。他们不仅用口传与日常生活延续民俗，更用文字与学校，把这些传统镌刻在后代心中。</p>
+      <h4>堂校合一与「先建校，后建馆」</h4>
+      <p>由于拓荒先驱大多为基督教美以美会信徒，1904年实兆远华文教育起步之初，便形成「教会与学校结合」的特色，先民在甘文阁建起了第一间福州学校。东南亚华人社区多是先设会馆、再办学校，实兆远福州人却恪守「先建校，后建馆」——教育的优先级永远高于会馆建设。1922年，王叔金发起成立实兆远橡胶商行公会，推行「橡胶抽分制」：每售出一吨橡胶即征收五十仙作为华文教育基金。胡文虎、胡文豹兄弟捐建南华中学礼堂，成百上千的割胶工人按月捐出微薄薪津；当地华校董事会，因此被誉为华社的「民间教育部」。</p>
+      <h4>师道绵延与逆风坚守</h4>
+      <p>1946年天定华校教师公会成立，1949年自发主办全区小学及中学统一毕业考试，南华中学等校学子在统一标准下接受考核。紧急状态时期，垦民被集中移殖到新村，华社迅速在新村内重建华小。1961年《教育法令》出台后，实兆远华社一方面接受改制成立南华国民型华文中学，保全津贴与升学渠道；另一方面自力更生重新创办南华独立中学，守护母语教育的火种。</p>
+      <p class="src">整理自校长室提供之《垦荒与铸魂：实兆远福州人拓荒与华文教育百年史》。</p>
+    </div>
+  </details>
+</section>
 
 <section class="era reveal" id="era1">
   <div class="era-head">
@@ -171,9 +215,11 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
   <div class="entry"><div class="yr">1936年</div><div class="txt">
     <p>1936年1月12日宣告成立并开学，推选王叔金先生为第一届常务董事会董事长兼建校委员会主席。校长为协和大学学士林局仁先生，学生百多位。当时的校舍，乃临时租用甘文阁李可祯牧师之洋楼，学生逐渐增多，教室不敷应用，准备购地自建校舍。在校董同仁等的努力下，购得甘文阁（旧校址）六英亩之地皮，于是积极进行筹募活动。</p>
     <figure><img src="img/era1-1936.jpg" alt="1936 年开学时期史料照片" loading="lazy"></figure>
+    <figure><img src="img/era1-1936-fund-letter.jpg" alt="新校舍建校委员会英文募捐函" loading="lazy"><figcaption>新校舍建校委员会英文募捐函，署名主席王叔金（Ong Seok Kim）、副主席戴保珍（Tai Poh Tih）、财政陈良知（Ding Liong Ti）。</figcaption></figure>
   </div></div>
   <div class="entry"><div class="yr">1937年</div><div class="txt">
     <p>戴保珍先生接任董事长，他开辟了运动场及建校舍，并获得胡文虎、文豹昆仲独资捐建大礼堂，耗时四年，教室、虎豹大礼堂先后落成，当时只设初中部及简易师范部。</p>
+    <figure><img src="img/era1-1937-hall.jpg" alt="虎豹大礼堂外观" loading="lazy"><figcaption>虎豹大礼堂，门楣仍刻「1937」。</figcaption></figure>
   </div></div>
   <div class="entry"><div class="yr">1938年</div><div class="txt">
     <p>李可祯先生担任董事长。</p>
@@ -230,7 +276,21 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
   </div></div>
   <div class="entry"><div class="yr">1972–1974年</div><div class="txt">
     <p>1972年学生人数增至120位，为了南华独中的发展，在董教生三方面通力合作之下，兴建独中第一期四间教室；1973年兴建第二期校舍八间教室；1974年兴建第三期校舍，内设有打字室、贩卖部、摄影室及冷气图书馆，学生人数增至三百多位。</p>
+    <p>1972年，许瑞成校长起草、颜清文董事长去函霹雳华校董联会，建议发动「复兴霹雳独中运动」，此举后来蔓延全国，成为「独中复兴运动」的吹哨之声。</p>
     <figure><img src="img/era3-1972.jpg" alt="七十年代扩建校舍史料照片" loading="lazy"></figure>
+    <details class="more">
+      <summary>延伸阅读：从一封求援书到全国的文化觉醒</summary>
+      <div class="more-body">
+        <p>20世纪60年代中期，马来西亚华文教育遭遇了历史上最严寒的冬夜。1965年，政府宣布废除小学六年级升中学考试，这一教育政策的骤变，瞬间切断了拒绝改制的华文独立中学赖以生存的生源血脉。当时在华教重镇霹雳州，经历改制风暴后原本还勉强维持着14所独中；到了1969年，随着最后一批拥有小六升中资格的毕业生离校，整整有5间独中因彻底招收不到学生而被迫停办。整个霹雳州最终只剩下9间独中，所有学校的学生人数加起来竟然不足2000人。</p>
+        <h4>黑夜里的第一根火柴</h4>
+        <p>1972年7月2日，眼看着南华独中在生死边缘苦苦挣扎，时任校长许瑞成深知，纯靠单打独斗，全马任何一所独中都无法在这场寒冬中幸免。他铺笺起草，将对独中面临毁灭性危机的担忧，化作一份联手救校的深刻剖析。这份初稿随即交到时任董事长颜清文手中。作为后来被尊称为「南华独中之父」的华社领袖，颜清文毅然签署并正式去函霹雳华校董联会时任主席丹斯里张国林，公开且郑重地建议：必须发动一场「复兴霹雳独中运动」。这封信，成为整场历史运动中第一声清脆的哨响。</p>
+        <h4>星火燎原</h4>
+        <p>这封公函促成了1972年底霹雳州9所独中校长的进一步串联，更直接启发并催生了1973年以胡万铎等人为核心的百万复兴大计。在「再穷不能穷教育」的信念支撑下，从富商巨贾到割胶工人、三轮车夫和小贩，无分阶级、倾力相助；义卖、义演、义踏、义剪此起彼伏，人们用手中的血汗钱，筑起了一条坚韧的母语文化防线。</p>
+        <h4>华教的丰碑</h4>
+        <p>1973年的独中复兴运动推动独中形成更统一的办学路线、课程与考试制度，并成为后来华文独中统一考试（UEC）发展的重要历史背景。1972年的南华来函，是霹雳独中复兴运动萌芽阶段一项可以明确追溯的书面行动；1973年以后，胡万铎、沈亭及各校董教与社会人士进一步把救校诉求转化为广泛的社会运动。</p>
+        <p class="src">整理自校长室提供之《霹雳独中复兴运动——南华》（史料核查：林连玉基金〈华教节特辑专访：霹雳独中复兴运动50周年〉）。</p>
+      </div>
+    </details>
   </div></div>
   <div class="entry"><div class="yr">1975–1978年</div><div class="txt">
     <p>1976年政府实施贷书及免学费制度，独中生源深受打击，南华独中学生人数骤然下降。1977年许瑞成校长辞职。1978年台湾师范大学理学士蔡传山先生担任第二任校长，学生人数132位；至年杪蔡校长辞职，后由台大文学硕士林亚泰先生担任第三任校长，全校学生人数只有125名。年杪，董事部、社会人士及教职员同心协力，改变招生策略，先后在爱大华、邦咯岛及实兆远等区召开座谈会，获得各界热烈反应。</p>
@@ -255,6 +315,7 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
   <div class="entry"><div class="yr">1982年</div><div class="txt">
     <p>南大文学士陈启衍先生受聘为校长，学生人数有290位。同年9月16日发出迁校通知函。</p>
     <figure><img src="img/era4-1982.jpg" alt="1982 年史料照片" loading="lazy"></figure>
+    <figure><img src="img/era4-1982-letter.jpg" alt="1982 年南华中学致副财政部长公函" loading="lazy"><figcaption>1982年11月17日，校方致函时任副财政部长拿督林良实医生，为新校舍建校基金申请免税证书。</figcaption></figure>
   </div></div>
   <div class="entry"><div class="yr">1983年</div><div class="txt">
     <p>学生人数达320位。同年4月27日进行新校舍动土典礼，后发动全校师生筹募建校基金，获得社会各阶层人士支持，8月6日正式动工。是年开办大学先修班及中级商科专修班。</p>
@@ -279,7 +340,39 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
     <p>7月，耗资50万元的五层楼新宿舍（马培斯男生宿舍）以及耗资25万元的余雪梅游泳池建竣。同年举行万人宴，庆祝以上两项建校计划的完成。</p>
     <figure><img src="img/era4-1990.jpg" alt="1990 年万人宴史料照片" loading="lazy"></figure>
   </div></div>
-  <p class="note">1991–2010 年的篇章，史料正在陆续整理中。</p>
+  <div class="entry"><div class="yr">1993年</div><div class="txt">
+    <p>郭元福伉俪女生宿舍及五层楼颜清文综合大楼建竣；同年6月，与南洋商报、皇帽啤酒厂（Carlsberg）与古田会馆齐心协力举办十大义演，筹获约二十五万令吉义款。</p>
+  </div></div>
+  <div class="entry"><div class="yr">1994年</div><div class="txt">
+    <p>4月，时任董事长颜清文律师亲自为综合大楼主持开幕；同年7月美术馆及丰光山庄正式开幕。</p>
+  </div></div>
+  <div class="entry"><div class="yr">1995年</div><div class="txt">
+    <p>时任霹雳董联会主席胡万铎先生主持壁球场开幕，壁球场正式投入使用。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2000年</div><div class="txt">
+    <p>6月，黄和平校长任期圆满前往中国发展，由叶绍宏代校长代理学校事务。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2001年</div><div class="txt">
+    <p>马胜发校长入职。南华独中接办「中学实用美术巡回讲座」，邀请专业广告设计师兼美术教育者郑伟峰先生主讲。10月19日举办「南华千禧之夜」，群星汇集学校大汇演筹集经费，目标款项为五十万令吉。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2002–2003年</div><div class="txt">
+    <p>2002年马胜发校长离职，由叶乃进校长掌管学校事务；2003年叶乃进校长离职，由林传顺校长掌校。2003年7月19日举办独中复兴运动三十周年纪念文娱汇演；同年9月20日，在爱大华古田会馆举办十大歌星义演，筹获六十万令吉义款。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2004年</div><div class="txt">
+    <p>4月林传顺校长任期结束，5月符传昌校长上任；6月符传昌校长卸任，由郭花妹校长掌校。同年，董事部主催学校主办第一届快乐成长生活营。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2005年</div><div class="txt">
+    <p>董事长丹斯里颜清文10月宣布「回馈曼绒子弟计划」：县内任何符合条件的小六毕业生，可获全免中学六年学费优惠。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2006年</div><div class="txt">
+    <p>尤青山 AMN 校长担任校长。9月1日，本校与南华国中董事部及校友会联合举办创校70周年千人宴。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2008–2009年</div><div class="txt">
+    <p>2008年4月，尤青山 AMN 校长因病无法掌管学校事务，转由吴兰芳代校长代理至翌年11月；同年，本校与云南省海外交流协会及昆明五杰学校联办寻根之旅云南行冬令营。2009年12月，张贞明校长上任。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2010年</div><div class="txt">
+    <p>4月，董事长丹斯里颜清文主动退任为财政，陈志成先生接任董事长。张贞明校长于4月离职，学校于7月再次委任郭花妹校长掌校。</p>
+  </div></div>
 </section>
 
 <section class="era reveal" id="era5">
@@ -287,9 +380,34 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
     <p class="years">2011 – 2020</p>
     <h2>迈向卓越 · 全人教育</h2>
     <p class="en">Towards Excellence: Holistic Education</p>
-    <p class="brief">2011至2020年间，办学发展、师生交流、校园建设与赛事获奖不断推进；积极筹款扩建设施，推动文化与教育交流，并于2014、2015年连续荣获马来西亚教育部私立学校组“五星级卓越学校奖”。</p>
+    <p class="brief">2011至2020年间，办学发展、师生交流、校园建设与赛事获奖不断推进；2012年获马来西亚教育局私立学校素质标准四星级奖，2013年获霹雳州教育局五星级大奖，2015年再膺教育部五星级品管学府。</p>
   </div>
-  <p class="note">本时期史料正在整理中。2018 年以后的校园纪事，可在<a href="../news/index.html">按年新闻馆</a>逐日回看。</p>
+  <div class="entry"><div class="yr">2011年</div><div class="txt">
+    <p>3月1日，「南华独中之父」丹斯里颜清文律师骤逝，全校悲恸。董事会提出「学会读书·学会做人」的办学方针，并推出全新校服。5月，郭花妹校长卸任，由陳麗冰接任校长。学校首办董家教共识营，并推出首届「十大巾帼须眉」。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2012年</div><div class="txt">
+    <p>学生正式穿上新校服；荣获马来西亚教育局颁发「私立学校素质标准·四星级奖」。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2013年</div><div class="txt">
+    <p>荣获霹雳州教育局颁发「私立学校素质标准·五星级大奖」。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2015年</div><div class="txt">
+    <p>再膺马来西亚教育部颁发「五星级品管学府」，并荣获「卓越学校荣誉」。</p>
+    <figure><img src="img/era5-2015-press.jpg" alt="报章报道南华独中再膺五星" loading="lazy"><figcaption>报章报道：南华独中再膺五星，管理卓越、学术优异。</figcaption></figure>
+  </div></div>
+  <div class="entry"><div class="yr">2016年</div><div class="txt">
+    <p>陈志成董事长卸任，颜登逸先生接任董事长；与中国福州古田县玉田中学缔结姐妹校。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2017年</div><div class="txt">
+    <p>翻新装修马培斯学生楼，同年启用。陳麗冰校长离职，由谢符财 AMP 少校接掌校印。12月开始 AchieVia（卓越领航）训练营，引入人格本体学。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2019年</div><div class="txt">
+    <p>翻新装修多用途学生餐厅；南华天使出使中国昆明。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2020年</div><div class="txt">
+    <p>整合办学理念，配合原有办学方针，提出办学愿景「培养『迎领』21世纪领袖人才」。谢符财 AMP 少校卸任，由李才龙校长代理学校事务。</p>
+  </div></div>
+  <p class="note">2018 年以后的校园纪事，可在<a href="../news/index.html">按年新闻馆</a>逐日回看。</p>
 </section>
 
 <section class="era reveal" id="era6">
@@ -299,10 +417,62 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
     <p class="en">Staying True, Writing New Chapters</p>
     <p class="brief">课程改革2.0、AI 创客空间、技职教育大楼、中国茶文化馆——这一段历史，正在发生。</p>
   </div>
-  <p class="note">南华的每一天都在被记录：<a href="../news/index.html">每日南华 · 按年新闻馆（1,198 篇）</a>；2026 年，我们迎来<a href="../90/index.html">九十周年校庆</a>。</p>
+  <div class="entry"><div class="yr">2021年</div><div class="txt">
+    <p>新冠疫情爆发，政府实施行动管制令（MCO），学生开始长达数月的居家上课。何家珍校长9月接管学校事务，至12月离职。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2022年</div><div class="txt">
+    <p>行动管制令解除，学生恢复到校上课。陳麗冰博士再任校长，锤炼办学愿景为「培养『迎领』21世纪中华文化素养领袖人才」，推出教改1.0：五大领域十八门课程与技职教育课程，并推出《南华漫游》实施开放性质性评价。</p>
+    <p>荣获「2022南洋卓越教育奖之杰出教育机构奖」，颜登逸董事长荣获「年度教育业者奖」。科技与工艺楼、多用途学生餐厅与建达楼多元活动中心，以及影艺空间相继开幕启用。1月27日与实兆远福清洋育英华小缔结姐妹校，并与吉隆坡崇文华小缔结姐妹校。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2023年</div><div class="txt">
+    <p>提出「美美与共，天下大同」教育宏愿；面向曼绒县华小学生免费开办「机器人课室」，共享教育资源。第一届学生领袖营及学生领袖会成立。推出新校训「明德·格物·致知·笃行」，制定一训三风。科技楼·技职教育中心开幕启用。礼堂装置 LED 大屏幕，首届文艺大汇演成功举办。</p>
+    <p>Tiger 星洲华教义演成功筹募现代化社区图书馆基金350万令吉，南华独中站于9月30日在古田会馆大礼堂举办；同年举办全霹雳中小学象棋个人锦标赛。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2024年</div><div class="txt">
+    <p>翻新装修综合大楼教师办公室，8月正式启用。举办迁校40周年晚宴暨义跑活动；与实兆远垦场博物馆合作举办《根扎垦场》舞台剧与博物馆筹款晚宴；与中国福清元洪高级中学缔结姐妹校；年末举办全霹雳中学华文学会干部训练营。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2025年</div><div class="txt">
+    <p>教改2.0：高一跨学科选科正式启动，落实综合性多元评量。AI 创客空间落成启用；组织游学团到2025大阪世界博览会；推动落实社会责任行动计划；开展美学课。与河南安阳市第八中学、四川大邑县安仁中学、无锡市华庄中学及无锡市匡园双语学校缔结友好校。</p>
+  </div></div>
+  <div class="entry"><div class="yr">2026年</div><div class="txt">
+    <p>庆祝创校90周年，开展徽标设计比赛、第23届运动会、文艺大汇演、教育研讨会、校友回校日、历史壁画、校史常识比赛、南华行、「数码刊物」及特刊编制、全国华文独中 AI 专题研习营暨机器人竞赛等一系列纪念活动。创立「茶别院」，并与漳州科技职业学院合作开设茶文化课程；社区图书馆正式动工。校长陳麗冰博士荣获「私立学校领导力特别教育奖」全州冠军。办学方针在「学会读书·学会做人」的基础上，增添「学会领导」。</p>
+    <p>4月1日，在霹雳州行政议员吴家良推动的《霹雳华教希望之行》下举行校园公投，全校学生一人一票，从六项校园改善提案中选出优先项目：厕所翻新及维修。</p>
+  </div></div>
+  <p class="note">南华的每一天都在被记录：<a href="../news/index.html">每日南华 · 按年新闻馆</a>；2026 年，我们迎来<a href="../90/index.html">九十周年校庆</a>。</p>
 </section>
 
-<footer>© 2026 曼绒县南华独立中学 · 史料整理自本校《勿忘历史 · 牢记使命》专栏</footer>
+<section class="era reveal" id="principals">
+  <div class="era-head">
+    <p class="years">1936 – 至今</p>
+    <h2>历任校长</h2>
+    <p class="en">Principals of Nan Hwa</p>
+  </div>
+  <div class="entry"><div class="yr">南华中学</div><div class="txt">
+    <ul class="plist"><li><span class="py">1936–1938</span>林居仁</li><li><span class="py">1938–1940</span>黄则吾</li><li><span class="py">1941</span>郑春荣</li><li><span class="py">1942–1945</span>二战停办</li><li><span class="py">1946–1948</span>金能襄</li><li><span class="py">1949–1956</span>周祖胜</li><li><span class="py">1957</span>沈志中</li><li><span class="py">1958–1960</span>陈一征</li></ul>
+  </div></div>
+  <div class="entry"><div class="yr">南华独中</div><div class="txt">
+    <ul class="plist"><li><span class="py">1961</span>金能襄</li><li><span class="py">1962</span>江禄森</li><li><span class="py">1963 年至 5 月</span>雷贤秀</li><li><span class="py">1963 年 6 月</span>陈奕东</li><li><span class="py">1964–1968</span>陈杨炎</li><li><span class="py">1969 年至 4 月</span>陈际强（代）</li><li><span class="py">1969 年 5 月–1970</span>林秀文</li><li><span class="py">1971–1977</span>许瑞成</li><li><span class="py">1978</span>蔡传山</li><li><span class="py">1979–1981</span>林亚泰</li><li><span class="py">1982–1986</span>陈启衍</li><li><span class="py">1986 年 8–12 月</span>张文良（代）</li><li><span class="py">1987–2000</span>黄和平</li><li><span class="py">2000 年 6 月</span>叶绍宏（代）</li><li><span class="py">2001</span>马胜发</li><li><span class="py">2002</span>叶乃进</li><li><span class="py">2003–2004 年 4 月</span>林传顺</li><li><span class="py">2004 年 5 月</span>符传昌</li><li><span class="py">2004 年 6 月–2005</span>郭花妹</li><li><span class="py">2006–2008 年 4 月</span>尤青山 AMN</li><li><span class="py">2008 年 4 月–2009 年 11 月</span>吴兰芳（代）</li><li><span class="py">2009 年 12 月–2010 年 4 月</span>张贞明</li><li><span class="py">2010 年 7 月–2011 年 5 月</span>郭花妹</li><li><span class="py">2011 年 6 月–2017 年 5 月</span>陳麗冰</li><li><span class="py">2017 年 5 月–2019</span>谢符财少校</li><li><span class="py">2019 年 11 月–2020 年 8 月</span>李才龙（代）</li><li><span class="py">2020 年 7 月–2021 年 9 月</span>李才龙</li><li><span class="py">2021 年 9 月 8–24 日</span>何家珍（代）</li><li><span class="py">2021 年 9–12 月</span>何家珍</li><li><span class="py">2021 年 12 月 28 日迄今</span>陳麗冰博士</li></ul>
+  </div></div>
+  <p class="note">历任董事长名表与肖像，见<a href="../board/index.html">董事会</a>。</p>
+</section>
+
+<section class="era reveal" id="exhibit">
+  <div class="era-head">
+    <p class="years">九十周年</p>
+    <h2>校史展版</h2>
+    <p class="en">90th Anniversary History Exhibition</p>
+    <p class="brief">九十周年校史展的五块展版，点击可看大图。</p>
+  </div>
+  <div class="exhibit">
+    <figure><a href="img/exhibit-01.jpg"><img src="img/exhibit-01.jpg" alt="校史展版一：垦荒与铸魂——实兆远福州人拓荒与华文教育百年史" loading="lazy"></a><figcaption>垦荒与铸魂：实兆远福州人拓荒与华文教育百年史</figcaption></figure>
+    <figure><a href="img/exhibit-02.jpg"><img src="img/exhibit-02.jpg" alt="校史展版二：南华中学校史" loading="lazy"></a><figcaption>南华中学校史</figcaption></figure>
+    <figure><a href="img/exhibit-03.jpg"><img src="img/exhibit-03.jpg" alt="校史展版三：南华校史" loading="lazy"></a><figcaption>南华校史（续）</figcaption></figure>
+    <figure><a href="img/exhibit-04.jpg"><img src="img/exhibit-04.jpg" alt="校史展版四：新世纪以来的南华" loading="lazy"></a><figcaption>南华校史（续）</figcaption></figure>
+    <figure><a href="img/exhibit-05.jpg"><img src="img/exhibit-05.jpg" alt="校史展版五：马来西亚华文独中复兴运动溯源" loading="lazy"></a><figcaption>从一封信到全马华人的呐喊：马来西亚华文独中复兴运动溯源</figcaption></figure>
+  </div>
+</section>
+
+<footer>© 2026 曼绒县南华独立中学 · 史料整理自本校《勿忘历史 · 牢记使命》专栏及校长室提供之《南华独中简史》</footer>
 
 <script>
 document.documentElement.classList.add('has-js');

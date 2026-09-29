@@ -57,6 +57,8 @@ section { max-width:1080px; margin:0 auto; padding:0 clamp(1.2rem,4vw,3rem); }
 .slot { aspect-ratio:4/5; background:linear-gradient(155deg,#EFE9DA 0%, #E7DCC2 100%);
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem;
   border-bottom:1px solid var(--rule); }
+.slot { position:relative; }
+.slot img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 22%; }
 .slot .initial { font-family:var(--serif); font-weight:700; font-size:2rem; color:var(--gold-deep); opacity:.55; }
 .slot .pending { font-size:.68rem; letter-spacing:.16em; color:var(--muted-lt); }
 .member .body { padding:.9rem 1rem 1.1rem; }
@@ -67,20 +69,6 @@ section { max-width:1080px; margin:0 auto; padding:0 clamp(1.2rem,4vw,3rem); }
 @media (max-width:420px) { .member.chair { grid-column:span 1; } }
 .member.chair .slot { aspect-ratio:8/5; }
 .member.chair h3 { font-size:1.3rem; }
-
-/* 历届董事长：年份 + 姓名 */
-.chairs { background:var(--paper); border:1px solid var(--rule); border-radius:.6rem; overflow:hidden; }
-.chairs .row { display:grid; grid-template-columns:11rem 1fr; gap:1rem;
-  padding:.8rem 1.2rem; border-bottom:1px solid var(--rule); align-items:baseline; }
-.chairs .row:last-child { border-bottom:none; }
-.chairs .yr { font-size:.82rem; letter-spacing:.04em; color:var(--muted); }
-.chairs .nm { font-family:var(--serif); font-weight:700; font-size:1.02rem; letter-spacing:.05em; }
-.chairs .row.gap { background:#F2EADA; }
-.chairs .row.gap .nm { font-family:inherit; font-weight:300; font-size:.88rem; color:var(--muted-lt); }
-.chairs .row.todo .nm { color:var(--terracotta); }
-@media (max-width:560px) {
-  .chairs .row { grid-template-columns:1fr; gap:.15rem; padding:.75rem 1rem; }
-}
 
 .note { max-width:1080px; margin:3rem auto 4rem; padding:0 clamp(1.2rem,4vw,3rem);
   font-size:.78rem; color:var(--muted-lt); line-height:1.85; }
@@ -114,7 +102,7 @@ section { max-width:1080px; margin:0 auto; padding:0 clamp(1.2rem,4vw,3rem); }
 
   <div class="roster-grid">
     <article class="member chair">
-      <div class="slot"><span class="initial">颜</span><span class="pending">照 片 待 补</span></div>
+      <div class="slot"><img src="../assets/img/board/chair-13.jpg" alt="董事长颜登逸" loading="lazy"></div>
       <div class="body"><h3>颜登逸</h3><p class="post">董事长</p></div>
     </article>
     <article class="member">
@@ -195,28 +183,39 @@ section { max-width:1080px; margin:0 auto; padding:0 clamp(1.2rem,4vw,3rem); }
 <section>
   <div class="sec-head">
     <h2>历届董事长</h2>
-    <p>自 1936 年建校起。1942 至 1945 年因日据停办。</p>
+    <p>自 1936 年建校起，共十四任、十三人。1942 至 1945 年因日据停办；1961 年起为南华独中董事会。</p>
   </div>
-  <div class="chairs">
-    <div class="row"><span class="yr">1936</span><span class="nm">王叔金</span></div>
-    <div class="row"><span class="yr">1937</span><span class="nm">戴保珍</span></div>
-    <div class="row"><span class="yr">1938</span><span class="nm">李可桢</span></div>
-    <div class="row"><span class="yr">1939 – 1940</span><span class="nm">陈良知</span></div>
-    <div class="row"><span class="yr">1941</span><span class="nm">方肇融</span></div>
-    <div class="row gap"><span class="yr">1942 – 1945</span><span class="nm">日据时期，学校停办</span></div>
-    <div class="row"><span class="yr">1946 – 1947</span><span class="nm">王叔金（复办后再任）</span></div>
-    <div class="row"><span class="yr">1948 – 1954</span><span class="nm">王秉惠</span></div>
-    <div class="row"><span class="yr">1955 – 1956</span><span class="nm">林守駓</span></div>
-    <div class="row"><span class="yr">1957</span><span class="nm">苏钊化</span></div>
-    <div class="row"><span class="yr">1958 – 1960</span><span class="nm">杨武明</span></div>
-    <div class="row"><span class="yr">1961 – 1970</span><span class="nm">林心汉</span></div>
-    <div class="row"><span class="yr">1971 – 2010 年 4 月</span><span class="nm">颜清文</span></div>
-    <div class="row"><span class="yr">2010 年 5 月起</span><span class="nm">陈志成</span></div>
-    <div class="row todo"><span class="yr">现任</span><span class="nm">颜登逸（接任年份待补）</span></div>
+  <div class="roster-grid">
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-01.jpg" alt="王叔金" loading="lazy"></div>
+      <div class="body"><h3>王叔金 JP, KMN</h3><p class="post">第一任 · 1936<br>第六任 · 1946–1947（战后复办）</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-02.jpg" alt="戴保珍牧师" loading="lazy"></div>
+      <div class="body"><h3>戴保珍牧师</h3><p class="post">第二任 · 1937</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-03.jpg" alt="李可桢牧师" loading="lazy"></div>
+      <div class="body"><h3>李可桢牧师</h3><p class="post">第三任 · 1938</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-04.jpg" alt="陈良知" loading="lazy"></div>
+      <div class="body"><h3>陈良知</h3><p class="post">第四任 · 1939–1940</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-05.jpg" alt="方肇融" loading="lazy"></div>
+      <div class="body"><h3>方肇融</h3><p class="post">第五任 · 1941</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-06.jpg" alt="王秉惠" loading="lazy"></div>
+      <div class="body"><h3>王秉惠 O.B.E.</h3><p class="post">第七任 · 1948–1954</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-07.jpg" alt="林守駓局绅" loading="lazy"></div>
+      <div class="body"><h3>林守駓局绅</h3><p class="post">第八任 · 1955–1956</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-08.jpg" alt="苏钊化" loading="lazy"></div>
+      <div class="body"><h3>苏钊化</h3><p class="post">第九任 · 1957</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-09.jpg" alt="杨武明" loading="lazy"></div>
+      <div class="body"><h3>杨武明</h3><p class="post">第十任 · 1958–1960</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-10.jpg" alt="拿督林心汉医生" loading="lazy"></div>
+      <div class="body"><h3>拿督林心汉医生 DPMP, JP</h3><p class="post">第十一任 · 1961–1970</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-11.jpg" alt="丹斯里颜清文" loading="lazy"></div>
+      <div class="body"><h3>丹斯里颜清文 PSM, JSM</h3><p class="post">第十二任 · 1971–2010 年 4 月</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-12.jpg" alt="陈志成" loading="lazy"></div>
+      <div class="body"><h3>陈志成</h3><p class="post">第十三任 · 2010 年 5 月–2016 年 4 月</p></div></article>
+    <article class="member"><div class="slot"><img src="../assets/img/board/chair-13.jpg" alt="颜登逸" loading="lazy"></div>
+      <div class="body"><h3>颜登逸</h3><p class="post">第十四任 · 2016 年 5 月迄今</p></div></article>
   </div>
 </section>
 
-<p class="note">现任董事名录取自校方《2022 年董事部制作名片资料》（第四十一届，2022–2023），至本页建立时尚未取得更新版本，姓名与职称可能已有变动。历届董事长名表取自《七十五周年纪念特刊·薪火相传》，该文件成稿于 2010 年前后，故「陈志成」之后至现任董事长之间的年份待校方补足。第九任董事长在同一份文件中「苏钊化／苏钊华」两种写法并存，此处从本站 <a href="../history/index.html">南华春秋</a> 已用之「苏钊化」。<br>
+<p class="note">现任董事名录取自校方《2022 年董事部制作名片资料》（第四十一届，2022–2023），至本页建立时尚未取得更新版本，姓名与职称可能已有变动。历届董事长任期与肖像取自校长室提供之《南华历任董事长及任期》（2026 年）。<br>
 本页不刊载任何董事的私人电话与电邮。返回 <a href="../organization/index.html">学校组织</a>。</p>
 
 <script>

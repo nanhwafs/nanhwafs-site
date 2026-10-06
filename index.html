@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500&family=Noto+Serif+SC:wght@400;600;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="motion/mg.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"School","name":"曼绒县南华独立中学",
  "alternateName":"Nan Hwa High School","foundingDate":"1936",
@@ -50,7 +51,7 @@ a{color:inherit}
 .skip:focus{left:1rem;top:1rem}
 
 /* ---------- 共用：章节签（直排）、印章、标题 ---------- */
-.seal{display:inline-block;writing-mode:vertical-rl;height:2.06em;line-height:1.03;font-size:13px;width:2.3em;
+.seal{display:inline-block;writing-mode:vertical-rl;height:2.3em;line-height:1.03;font-size:13px;width:2.3em;
   padding:.12em .1em;background:var(--zhu);color:#FBEFE3;font-family:var(--serif);font-weight:900;
   border-radius:3px;letter-spacing:0;text-align:center;box-shadow:inset 0 0 0 1.5px rgba(251,239,227,.55)}
 .chap{display:flex;align-items:flex-start;gap:.7rem;color:var(--muted)}
@@ -381,6 +382,15 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
 .dock .r{background:var(--gold);color:var(--night)}
 @media (max-width:760px){ .dock{display:flex} }
 
+/* 动态图形《迎领之路》：随滚动播放的独立段落（不挡 Hero） */
+.mg-track{position:relative;height:380vh;background:#0E1A14}
+.mg-stick{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.mg-skip{position:absolute;z-index:5;right:var(--gut);bottom:1.2rem;font-size:.8rem;letter-spacing:.2em;color:#C9C2AE;text-decoration:none;
+  padding:.5rem .9rem;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(14,26,20,.4)}
+.mg-skip:hover{color:var(--gold)}
+@media (max-width:760px){ .mg-track{height:320vh} .mg-skip{bottom:5rem} }
+@media (prefers-reduced-motion:reduce){ .mg-track{height:100vh;height:100svh} }
+
 /* 入场：只做功能性淡入；内容默认可见 */
 .has-js .reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .has-js .reveal.in{opacity:1;transform:none}
@@ -464,6 +474,11 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
 </div>
 
 <main id="main">
+
+<!-- 动态图形《迎领之路》：随滚动播放；源码在 motion/，同片另有 MP4 在 motion/video/ -->
+<section class="mg-track" id="mgTrack" aria-label="动态图形《迎领之路》">
+  <div class="mg-stick"><div id="mgStage"></div><a class="mg-skip" href="#t1">跳过动画 ↓</a></div>
+</section>
 
 <!-- 壹 · 主体 -->
 <section class="chapter subject" aria-labelledby="t1">
@@ -835,7 +850,9 @@ new IntersectionObserver(([e]) => { bar.classList.toggle('solid', !e.isIntersect
 let pastHero = false, atEnd = false;
 const syncDock = () => dock.classList.toggle('show', pastHero && !atEnd);
 new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; syncDock(); }).observe(hero);
-new IntersectionObserver(es => { atEnd = es.some(x => x.isIntersecting); syncDock(); }).observe(document.getElementById('welcome'));
+const ends = new Set();
+const endIO = new IntersectionObserver(es => { es.forEach(x => x.isIntersecting ? ends.add(x.target) : ends.delete(x.target)); atEnd = ends.size > 0; syncDock(); });
+endIO.observe(document.getElementById('welcome')); endIO.observe(document.getElementById('mgTrack'));
 
 // 目录
 const menu = document.getElementById('menu');
@@ -846,6 +863,18 @@ menu.addEventListener('click', e => { if (e.target.closest('a')) menu.close(); }
 // 入场淡入
 const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); } }), {rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// 动态图形：接近视口才载入素材与脚本
+(function(){
+  const track = document.getElementById('mgTrack');
+  const io2 = new IntersectionObserver(([e]) => {
+    if (!e.isIntersecting) return; io2.disconnect();
+    const s = document.createElement('script'); s.src = 'motion/mg.js';
+    s.onload = () => NanhwaMG.mount(document.getElementById('mgStage'), {mode:'scroll', base:'motion/', crest:'assets/img/crest-color.png', track});
+    document.body.appendChild(s);
+  }, {rootMargin:'100% 0px'});
+  io2.observe(track);
+})();
 
 // 年轮：哪一段在视口中央，就点亮哪一圈
 const fig = document.getElementById('ringsFig'), glow = document.getElementById('ringGlow');

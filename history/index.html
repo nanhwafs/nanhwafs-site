@@ -61,7 +61,7 @@ img { max-width:100%; display:block; }
 @media (prefers-reduced-motion: reduce) { .shimmer-text { animation:none; background-position:0 center; } }
 .cover p.intro { margin-top:1.1rem; max-width:40em; color:#f2ecdd; line-height:2; font-size:.96rem; font-weight:300;
   text-shadow:0 1px 8px rgba(0,0,0,.55); }
-.cover p.src { margin-top:.7rem; font-size:.78rem; color:#c9beA0; }
+.cover p.src { margin-top:.7rem; font-size:.78rem; color:#E2D6B8; text-shadow:0 1px 6px rgba(0,0,0,.6); }
 
 /* 时期索引 */
 .eranav { max-width:960px; margin:2rem auto 0; padding:0 clamp(1.2rem,4vw,3rem);
@@ -117,6 +117,29 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
 .family-nav a:hover::after { transform:translateX(220%); }
 .family-nav a:active { transform:scale(.97); }
 @media (prefers-reduced-motion:reduce){ .family-nav a::after { transition:none; } }
+
+/* ===== 首屏可读性（10-09，依美术老师意见）=====
+   ① 导航胶囊改深色玻璃：不论背后是白楼还是暗树都看得清；当前页用米白实底
+   ② 文字区垫一块局部墨绿暗晕，并把米白褪色带让到文字下方，字永远落在暗底上
+   ③ 标题平衡断行，不剩单字　④ 收宽字距　⑤ 手机顶栏：藏英文校名、胶囊一行可横滑 */
+.family-nav a { background:rgba(14,22,16,.42); border-color:rgba(255,255,255,.35); color:#F4EBD6; text-shadow:0 1px 2px rgba(0,0,0,.45); }
+.family-nav a:hover { background:rgba(14,22,16,.6); border-color:rgba(255,255,255,.7); }
+.family-nav a.active { background:#F4EFE4; border-color:#F4EFE4; color:#17201B; text-shadow:none; font-weight:700; }
+.cover .content { isolation:isolate; padding-bottom:calc(clamp(1.6rem,4.5vh,2.4rem) + clamp(70px,14vh,150px)); }
+.cover .content::before { content:""; position:absolute; z-index:-1; inset:-6% -14% 8% -14%; pointer-events:none;
+  background:radial-gradient(ellipse at 45% 50%, rgba(12,20,14,.66) 0%, rgba(12,20,14,.42) 42%, rgba(12,20,14,0) 72%); }
+.cover h1 { text-wrap:balance; }
+.kicker { letter-spacing:.12em; }
+.eyebrow { letter-spacing:.1em; }
+.brand small { letter-spacing:.12em; }
+.brand b { white-space:nowrap; }
+@media (max-width:560px) {
+  .brand small { display:none; }
+  .family-nav { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; }
+  .family-nav::-webkit-scrollbar { display:none; }
+  .family-nav a { flex:none; }
+}
+.cover .sun { opacity:.45; }   /* 牌楼照本身很亮，光晕减半免得整张洗白 */
 </style>
 </head>
 <body>
@@ -321,6 +344,11 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
 } else {
   document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
 }
+</script>
+<script>
+// 手机胶囊一行横滑时，把当前页那颗滑到看得见的位置
+(function(){ var n=document.querySelector('.family-nav'), a=n&&n.querySelector('.active');
+  if (a && n.scrollWidth > n.clientWidth) n.scrollLeft = a.offsetLeft - (n.clientWidth - a.offsetWidth)/2; })();
 </script>
 </body>
 </html>

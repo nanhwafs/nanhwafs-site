@@ -27,7 +27,6 @@
 .mg .big{font-family:var(--serif);font-weight:900;letter-spacing:.04em;line-height:1.2;white-space:nowrap}
 .mg .sub{font-family:var(--serif);font-weight:600;line-height:1.8}
 .mg .latin{font-family:var(--latin);font-style:italic;font-weight:500;letter-spacing:.06em;white-space:nowrap}
-.mg .kick{font-family:var(--serif);letter-spacing:.4em;color:var(--gold);white-space:nowrap}
 .mg .shadow{text-shadow:0 2px 18px rgba(0,0,0,.55)}
 
 /* 卡片 */
@@ -35,7 +34,7 @@
   border-radius:3px;box-shadow:0 24px 60px rgba(0,0,0,.35);will-change:transform,opacity;opacity:0}
 .mg .card img{display:block;width:100%;height:100%;object-fit:cover;border-radius:2px}
 .mg .card b{position:absolute;left:0;right:0;bottom:calc(var(--u)*.55);text-align:center;color:#17201B;
-  font-family:var(--serif);font-weight:900;letter-spacing:.2em;font-size:calc(var(--u)*1.35)}
+  font-family:var(--serif);font-weight:900;letter-spacing:.06em;font-size:calc(var(--u)*1.35)}
 
 /* 灯塔光束 */
 .mg .beam{width:4000px;height:4000px;border-radius:50%;opacity:0;transform-origin:2000px 2000px;
@@ -45,15 +44,15 @@
 .mg .core{width:200px;height:200px;border-radius:50%;opacity:0;transform-origin:100px 100px;
   background:radial-gradient(circle,rgba(255,240,200,.95) 0,rgba(255,214,120,.55) 18%,rgba(255,214,120,0) 62%)}
 .mg .lab{position:absolute;left:0;top:0;opacity:0;text-align:center;will-change:transform,opacity;white-space:nowrap}
-.mg .lab b{display:block;font-family:var(--serif);font-weight:900;font-size:calc(var(--u)*4.6);letter-spacing:.12em;line-height:1.1}
-.mg .lab i{display:block;font-style:normal;font-family:var(--serif);color:var(--gold);font-size:calc(var(--u)*1.7);letter-spacing:.4em;margin-top:calc(var(--u)*.6)}
+.mg .lab b{display:block;font-family:var(--serif);font-weight:900;font-size:calc(var(--u)*4.6);letter-spacing:.04em;line-height:1.1}
+.mg .lab i{display:block;font-style:normal;font-family:var(--serif);color:var(--gold);font-size:calc(var(--u)*1.7);letter-spacing:.08em;margin-top:calc(var(--u)*.6)}
 
 /* 年轮与根 */
 .mg svg.rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .mg svg.rings circle{fill:none;stroke:var(--gold);stroke-linecap:round}
 .mg svg.rings path{fill:none;stroke:var(--gold);stroke-linecap:round;stroke-linejoin:round}
 .mg .rlab{position:absolute;left:0;top:0;opacity:0;padding:.25em .9em;border-radius:999px;background:rgba(14,26,20,.86);
-  border:1px solid rgba(227,178,79,.55);font-family:var(--serif);font-weight:600;font-size:calc(var(--u)*1.55);letter-spacing:.2em;white-space:nowrap;color:#F4EFE4}
+  border:1px solid rgba(227,178,79,.55);font-family:var(--serif);font-weight:600;font-size:calc(var(--u)*1.55);letter-spacing:.06em;white-space:nowrap;color:#F4EFE4}
 
 /* 角色 */
 .mg .char{position:absolute;left:0;top:0;will-change:transform}

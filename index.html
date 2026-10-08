@@ -42,7 +42,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.9;font-size:17px;
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.8;font-size:17px;
   overflow-x:hidden;-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
 a{color:inherit}
@@ -54,13 +54,16 @@ a{color:inherit}
 .seal{display:inline-block;writing-mode:vertical-rl;height:2.3em;line-height:1.03;font-size:13px;width:2.3em;
   padding:.12em .1em;background:var(--zhu);color:#FBEFE3;font-family:var(--serif);font-weight:900;
   border-radius:3px;letter-spacing:0;text-align:center;box-shadow:inset 0 0 0 1.5px rgba(251,239,227,.55)}
-.chap{display:flex;align-items:flex-start;gap:.7rem;color:var(--muted)}
+/* 章节签：吉祥物（女/男逐章交替，两人同框＝本章最要紧）＋章号＋两字直排签。吉祥物刻意做小，只当路标不当主角 */
+.chap{display:flex;flex-direction:column;align-items:center;gap:.55rem;color:var(--muted)}
+.chap .kids{display:flex;align-items:flex-end;gap:3px}
+.chap .kids img{height:68px;width:auto}
 .chap .no{font-family:var(--serif);font-weight:900;font-size:1.05rem;color:var(--zhu);line-height:1}
-.chap .v{writing-mode:vertical-rl;font-family:var(--serif);font-size:.9rem;letter-spacing:.42em;line-height:1}
-.en{font-family:var(--latin);font-style:italic;font-weight:500;letter-spacing:.04em;font-size:1.05rem;color:var(--gold-deep)}
-h2.big{font-family:var(--serif);font-weight:900;font-size:clamp(2rem,5.4vw,4.4rem);line-height:1.22;letter-spacing:.01em}
+.chap .v{writing-mode:vertical-rl;font-family:var(--serif);font-size:.9rem;letter-spacing:.12em;line-height:1}
+h2.big{font-family:var(--serif);font-weight:900;font-size:clamp(1.9rem,4.6vw,3.6rem);line-height:1.25;letter-spacing:0}
+h2.big,h3{word-break:keep-all;overflow-wrap:anywhere}   /* 中文标题只在标点/<br> 处断行，免得「主／语。」这种单字落单 */
 h3{font-family:var(--serif);font-weight:900;letter-spacing:.02em}
-.lede{font-size:clamp(1rem,.95rem + .3vw,1.12rem);color:var(--ink-soft);max-width:34em;line-height:2}
+.lede{margin-top:1.3rem;font-size:clamp(1rem,.95rem + .3vw,1.12rem);color:var(--ink-soft);max-width:32em;line-height:1.8}
 .wrap{max-width:1240px;margin:0 auto;padding:0 var(--gut)}
 .btn{display:inline-flex;align-items:center;gap:.5rem;min-height:46px;padding:.6rem 1.4rem;border-radius:999px;
   font-weight:700;font-size:.92rem;text-decoration:none;letter-spacing:.04em;
@@ -128,7 +131,7 @@ dialog.menu::backdrop{background:rgba(0,0,0,.4)}
 .hero .fade{position:absolute;inset:0;z-index:3;background:#06100a;opacity:0;pointer-events:none;transition:opacity 2.4s ease}
 .hero .fade.on{opacity:1}
 .hero .content{position:absolute;z-index:5;left:0;right:0;bottom:clamp(4.5rem,13vh,8rem);padding:0 var(--gut);max-width:1240px;margin:0 auto}
-.hero .place{font-family:var(--serif);font-size:.86rem;letter-spacing:.32em;color:#E9E2CE;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+.hero .place{font-family:var(--serif);font-size:.86rem;letter-spacing:.16em;color:#E9E2CE;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .hero h1{margin-top:.7rem;font-family:var(--serif);font-weight:900;font-size:clamp(1.9rem,4.2vw,3.4rem);line-height:1.25;letter-spacing:.04em;
   text-shadow:0 2px 18px rgba(0,0,0,.5),0 0 14px rgba(255,244,214,.25)}
 .hero h1 .light{color:var(--gold);text-shadow:0 1px 10px rgba(0,0,0,.45),0 0 22px rgba(227,178,79,.55)}
@@ -144,26 +147,24 @@ dialog.menu::backdrop{background:rgba(0,0,0,.4)}
 .frost-green{background:rgba(62,179,112,.48);color:#fff;border:1px solid rgba(255,255,255,.35);text-shadow:0 1px 4px rgba(0,0,0,.35)}
 .frost-green:hover{background:rgba(62,179,112,.7)}
 .cue{position:absolute;z-index:5;right:var(--gut);bottom:clamp(4.5rem,13vh,8rem);writing-mode:vertical-rl;font-family:var(--serif);
-  font-size:.8rem;letter-spacing:.5em;color:#E9E2CE;text-decoration:none;display:flex;align-items:center;gap:.8rem;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+  font-size:.8rem;letter-spacing:.2em;color:#E9E2CE;text-decoration:none;display:flex;align-items:center;gap:.8rem;text-shadow:0 1px 6px rgba(0,0,0,.6)}
 .cue::after{content:"";width:1px;height:56px;background:linear-gradient(#E9E2CE,transparent)}
 @media (max-width:760px){ .cue{display:none} .hero .content{bottom:clamp(2.5rem,8vh,4rem)} }
 
 /* ---------- 章：通用 ---------- */
 .chapter{padding:clamp(5rem,12vw,9rem) 0}
 .head{display:grid;grid-template-columns:auto 1fr;gap:clamp(1rem,3vw,2.6rem);align-items:start}
-.head .en{display:block;margin-bottom:.6rem}
 @media (max-width:640px){
   .head{grid-template-columns:1fr;gap:.9rem}
-  .head .chap .v{writing-mode:horizontal-tb;letter-spacing:.3em}
-  .head .chap{align-items:baseline}
+  .head .chap .v{writing-mode:horizontal-tb;letter-spacing:.08em}
+  .head .chap{flex-direction:row;align-items:flex-end}
+  .chap .kids img{height:52px}
   footer .wrap{grid-template-columns:1fr}
 }
 
 /* 壹 · 主体 */
-.subject .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
-.subject .copy p{margin-top:1.6rem}
-.pledge{margin-top:2.2rem;padding-left:1.2rem;border-left:2px solid var(--zhu);font-family:var(--serif);font-weight:600;
-  font-size:clamp(1.05rem,1rem + .4vw,1.3rem);line-height:1.9;color:var(--ink)}
+.subject h2.big{font-size:clamp(1.9rem,3.3vw,3rem)}
+.subject .grid{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center}
 .collage{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:clamp(54px,7vw,92px);gap:.7rem}
 .collage figure{overflow:hidden;border-radius:4px;background:var(--paper-2);position:relative}
 .collage img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
@@ -183,10 +184,9 @@ dialog.menu::backdrop{background:rgba(0,0,0,.4)}
 .role .t{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:1.4rem 1.3rem}
 .role .who{display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
 .role .who b{font-family:var(--serif);font-weight:900;font-size:clamp(1.5rem,2.4vw,2.1rem);letter-spacing:.08em}
-.role .who em{font-style:normal;font-family:var(--serif);color:var(--gold);font-size:.95rem;letter-spacing:.12em}
+.role .who em{font-style:normal;font-family:var(--serif);color:var(--gold);font-size:.95rem;letter-spacing:.04em}
 .role p{margin-top:.6rem;font-size:.92rem;line-height:1.85;color:#E6E1D4;max-width:24em;opacity:.0;transform:translateY(8px);
   transition:opacity .5s ease .1s,transform .6s var(--ease) .1s}
-.role .v{position:absolute;z-index:2;top:1.2rem;right:1.1rem;writing-mode:vertical-rl;font-family:var(--serif);font-size:.82rem;letter-spacing:.4em;opacity:.85}
 @media (hover:hover) and (min-width:861px){
   .role:hover,.role:focus-within{flex-grow:2.3} .role:hover img{transform:scale(1.04)}
   .role:hover p,.role:focus-within p{opacity:1;transform:none}
@@ -198,19 +198,15 @@ dialog.menu::backdrop{background:rgba(0,0,0,.4)}
 }
 
 /* 叁 · 底色与远见 */
-.diptych{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"c f" "s s"}
-.dip-culture{grid-area:c}.dip-future{grid-area:f}.seam{grid-area:s}
+.diptych{display:grid;grid-template-columns:1fr 1fr}
 .dip{position:relative;padding:clamp(4rem,9vw,8rem) clamp(1.2rem,5vw,5rem);overflow:hidden;display:flex;flex-direction:column;justify-content:center}
 .dip-culture{background:var(--paper)}
 .dip-future{background:var(--night);color:#EDE8DA}
-.dip .ghost{position:absolute;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-family:var(--serif);font-weight:900;
-  font-size:clamp(5rem,11vw,10rem);line-height:1.05;letter-spacing:.06em;pointer-events:none;user-select:none;white-space:nowrap}
-.dip-culture .ghost{right:-.08em;color:rgba(23,32,27,.05)}
-.dip-future .ghost{left:-.08em;color:rgba(227,178,79,.07)}
-.dip .kick{font-family:var(--serif);font-size:.9rem;letter-spacing:.36em;color:var(--zhu)}
+.dip .kick{display:flex;align-items:flex-end;gap:.6rem;font-family:var(--serif);font-size:.95rem;letter-spacing:.08em;color:var(--zhu)}
+.dip .kick .kids img{height:60px;width:auto}
 .dip-future .kick{color:var(--gold)}
 .dip h3{margin-top:.9rem;font-size:clamp(1.7rem,3.4vw,2.8rem);line-height:1.3}
-.dip p{margin-top:1.2rem;max-width:28em;line-height:2;font-size:.98rem}
+.dip p{margin-top:1.2rem;max-width:28em;line-height:1.8;font-size:1rem}
 .dip-culture p{color:var(--ink-soft)} .dip-future p{color:#BFC6BC}
 .dip .pics{margin-top:2.2rem;display:grid;grid-template-columns:1.4fr 1fr;gap:.6rem;max-width:560px}
 .dip .pics img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:4px}
@@ -219,14 +215,8 @@ dialog.menu::backdrop{background:rgba(0,0,0,.4)}
 .dip .pics .stack img{aspect-ratio:4/3}
 .dip a.more{margin-top:1.8rem;display:inline-flex;gap:.4rem;font-weight:700;font-size:.92rem;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:.15rem;align-self:flex-start}
 .dip-culture a.more{color:var(--zhu)} .dip-future a.more{color:var(--gold)}
-.seam{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:1.2rem;padding:1.5rem var(--gut);
-  background:linear-gradient(90deg,var(--paper) 50%,var(--night) 50%);font-family:var(--serif);font-weight:600;font-size:clamp(1rem,2vw,1.25rem)}
-.seam span:first-child{color:var(--ink);text-align:right;flex:1} .seam span:last-child{color:var(--gold);flex:1}
-.seam .seal{flex:none}
 @media (max-width:860px){
-  .diptych{grid-template-columns:1fr;grid-template-areas:"c" "s" "f"}
-  .seam{background:linear-gradient(var(--paper) 50%,var(--night) 50%);flex-direction:column;gap:.7rem;text-align:center}
-  .seam span{flex:none!important;text-align:center!important}
+  .diptych{grid-template-columns:1fr}
 }
 
 /* 肆 · 领导力年轮 */
@@ -235,25 +225,20 @@ dialog.menu::backdrop{background:rgba(0,0,0,.4)}
 .rings-fig{position:sticky;top:calc(72px + 6vh);align-self:start}
 .rings-fig svg{width:100%;max-width:520px;height:auto;display:block;margin:0 auto;overflow:visible}
 .rings-fig circle.r{fill:none;stroke:rgba(23,32,27,.2);stroke-width:1.2;transition:stroke .6s ease,stroke-width .6s ease,opacity .6s ease}
-.rings-fig text{font-family:var(--serif);font-size:13px;letter-spacing:.2em;fill:var(--muted);transition:fill .6s ease}
+.rings-fig text{font-family:var(--serif);font-size:13px;letter-spacing:.06em;fill:var(--muted);transition:fill .6s ease}
 .rings-fig .core{fill:var(--zhu)}
 .rings-fig .glow{fill:none;stroke:var(--gold);stroke-width:16;opacity:0;transition:opacity .6s ease,r .6s var(--ease);filter:blur(10px)}
 .rings-fig[data-on] circle.r.on{stroke:var(--gold-deep);stroke-width:3}
 .rings-fig[data-on] circle.r.past{stroke:rgba(181,133,60,.45);stroke-width:1.6}
 .rings-fig[data-on] text.on{fill:var(--ink)}
 .rings-fig[data-on] .glow{opacity:.35}
-.rings-fig .caption{text-align:center;margin-top:1rem;font-family:var(--serif);color:var(--muted);font-size:.9rem;letter-spacing:.2em}
-.ring-step{min-height:58vh;display:flex;flex-direction:column;justify-content:center;padding:2rem 0;border-top:1px solid var(--rule)}
+.rings-fig .caption{text-align:center;margin-top:1rem;font-family:var(--serif);color:var(--muted);font-size:.9rem;letter-spacing:.08em}
+.ring-step{min-height:44vh;display:flex;flex-direction:column;justify-content:center;padding:2rem 0;border-top:1px solid var(--rule)}
 .ring-step:first-child{border-top:0}
-.ring-step .lv{font-family:var(--latin);font-style:italic;color:var(--gold-deep);font-size:1.05rem}
-.ring-step h3{margin-top:.3rem;font-size:clamp(1.45rem,2.6vw,2.15rem);line-height:1.35}
-.ring-step h3 small{display:block;font-size:.55em;color:var(--zhu);letter-spacing:.24em;margin-bottom:.3rem;font-weight:600}
-.ring-step p{margin-top:.9rem;color:var(--ink-soft);max-width:30em;font-size:.97rem}
-.ring-step .proof{margin-top:1.2rem;display:grid;grid-template-columns:minmax(0,150px) 1fr;gap:1rem;align-items:center;max-width:32em}
-.ring-step .proof img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px}
-.ring-step .proof span{font-size:.86rem;color:var(--muted);line-height:1.8}
-.roots{margin-top:clamp(3rem,7vw,5rem);text-align:center;font-family:var(--serif);font-weight:900;font-size:clamp(1.4rem,3.2vw,2.4rem);line-height:1.6}
-.roots small{display:block;margin-top:.6rem;font-weight:400;font-size:.9rem;letter-spacing:.3em;color:var(--muted)}
+.ring-step h3{font-size:clamp(1.45rem,2.6vw,2.1rem);line-height:1.35}
+.ring-step p{margin-top:.8rem;color:var(--ink-soft);max-width:30em;font-size:1rem}
+.ring-step .proof{margin-top:1.2rem;max-width:26em}
+.ring-step .proof img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:4px}
 @media (max-width:860px){
   .rings-grid{grid-template-columns:1fr}
   .rings-fig{position:sticky;top:62px;z-index:2;background:var(--paper-3);padding:.4rem 0 .6rem;border-bottom:1px solid var(--rule)}
@@ -309,10 +294,10 @@ dialog.menu::backdrop{background:rgba(0,0,0,.4)}
 .hall{display:flex;flex-direction:column;gap:.4rem;padding:1.6rem 1.3rem 1.8rem 0;text-decoration:none;color:inherit;border-right:1px solid rgba(237,228,208,.18);min-height:220px}
 .hall+.hall{padding-left:1.3rem}
 .hall:last-child{border-right:0}
-.hall i{font-style:normal;font-family:var(--serif);color:var(--gold);font-size:.85rem;letter-spacing:.3em}
+.hall i{font-style:normal;font-family:var(--serif);color:var(--gold);font-size:.85rem;letter-spacing:.08em}
 .hall b{font-family:var(--serif);font-weight:900;font-size:1.45rem;letter-spacing:.06em;margin-top:.4rem}
 .hall span{font-size:.86rem;color:#B9AC91;line-height:1.8}
-.hall em{margin-top:auto;font-style:normal;font-size:.82rem;font-weight:700;letter-spacing:.12em;color:var(--gold)}
+.hall em{margin-top:auto;font-style:normal;font-size:.82rem;font-weight:700;letter-spacing:.04em;color:var(--gold)}
 .hall.soon em{color:#8E846F}
 a.hall:hover b{color:var(--gold)}
 .museum .enter{margin-top:2.4rem}
@@ -485,12 +470,10 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
   <div class="wrap grid">
     <div class="copy reveal">
       <div class="head">
-        <div class="chap"><span class="no">壹</span><span class="v">学生 · 主体</span></div>
+        <div class="chap"><span class="kids" aria-hidden="true"><img src="assets/img/home/kid-girl.webp" alt="" width="70" height="200"><img src="assets/img/home/kid-boy.webp" alt="" width="64" height="200"></span><span class="no">壹</span><span class="v">主体</span></div>
         <div>
-          <span class="en">The student is the subject</span>
           <h2 class="big" id="t1">孩子，<br>是这所学校的主语。</h2>
           <p class="lede">课表、社团、宿舍、导师制度——在南华，一切都围绕同一个人设计：您的孩子。我们看见他的好奇，看见她的坚持，也看见那些还没被发现的天赋。</p>
-          <p class="pledge">学生是主体；<br>学生的未来，是我们的目标，也是我们的承诺。</p>
         </div>
       </div>
     </div>
@@ -508,34 +491,29 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
 <section class="chapter together" aria-labelledby="t2">
   <div class="wrap">
     <div class="head reveal">
-      <div class="chap"><span class="no">贰</span><span class="v">同行 · 四者</span></div>
+      <div class="chap"><span class="kids" aria-hidden="true"><img src="assets/img/home/kid-girl.webp" alt="" width="70" height="200"></span><span class="no">贰</span><span class="v">同行</span></div>
       <div>
-        <span class="en">Who walks with your child</span>
         <h2 class="big" id="t2">一个孩子的成长，<br>需要四种力量同行。</h2>
       </div>
     </div>
     <div class="roles reveal">
       <a class="role" href="cocurricular/index.html">
         <img src="assets/img/home/uniform-leaders.webp" alt="身着校服的南华学生列队" loading="lazy">
-        <span class="v">成长的主人</span>
         <div class="t"><div class="who"><b>学生</b><em>主体</em></div>
           <p>从选修课到学会团体，从班级到全校，孩子在一次次选择与承担中认识自己。</p></div>
       </a>
       <a class="role" href="faculty/index.html">
         <img src="assets/img/home/lab-teacher.webp" alt="老师在实验室指导学生操作" loading="lazy">
-        <span class="v">导师 · 引路人</span>
         <div class="t"><div class="who"><b>教师</b><em>引路人</em></div>
           <p>导师制度让每一位学生都有自己的导师：倾听心声，陪伴成长，在关键路口指一条路。</p></div>
       </a>
       <a class="role" href="admission/index.html">
         <img src="assets/img/home/parents.webp" alt="校园开放日，学生向来访家长讲解项目式学习成果" loading="lazy">
-        <span class="v">护航 · 港湾</span>
         <div class="t"><div class="who"><b>家长</b><em>港湾</em></div>
           <p>您是孩子出航时的护航，也是归来时的港湾。校园开放日与家校沟通，让学校与家庭站在同一条船上。</p></div>
       </a>
       <a class="role" href="about/index.html">
         <img src="assets/img/home/arch.webp" alt="南华独中校门牌楼与蓝天" loading="lazy">
-        <span class="v">灯塔 · 迎领</span>
         <div class="t"><div class="who"><b>学校</b><em>灯塔</em></div>
           <p>是灯塔，是指引，也是「迎领」——迎接每一个孩子到来，再领他走向更远的地方。</p></div>
       </a>
@@ -546,8 +524,7 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
 <!-- 叁 · 底色与远见 -->
 <section class="diptych" aria-label="中华文化与未来科技">
   <div class="dip dip-culture reveal">
-    <span class="ghost" aria-hidden="true">明德格物</span>
-    <span class="kick">叁 · 底色 · 底蕴</span>
+    <span class="kick"><span class="kids" aria-hidden="true"><img src="assets/img/home/kid-boy.webp" alt="" width="64" height="200"></span>叁 · 底色</span>
     <h3>中华文化素养，<br>是孩子的底色。</h3>
     <p>校训「明德格物，致知笃行」语出《大学》《中庸》。书法、茶艺、廿四节令鼓、龙狮与华乐，在南华不是舞台上偶尔的展演，而是日常课表的一部分。</p>
     <div class="pics">
@@ -559,12 +536,8 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
     </div>
     <a class="more" href="academic/index.html">中华艺术 · 文化传承课程 <span class="arrow">→</span></a>
   </div>
-  <div class="seam">
-    <span>以文化为底色</span><span class="seal" aria-hidden="true">底蕴远见</span><span>以科技为笔</span>
-  </div>
   <div class="dip dip-future reveal">
-    <span class="ghost" aria-hidden="true">致知笃行</span>
-    <span class="kick">远见 · 蓝图之笔</span>
+    <span class="kick">远见</span>
     <h3>未来科技与人工智能，<br>是绘制蓝图的笔。</h3>
     <p>AI 创客空间、Python 编程、机器人与无人机课程；「理解科技、运用科技、反思科技」的 AI 教学与应用计划。2025 年，南华学生夺下全国中学生 AI 机器人竞赛总决赛冠军。</p>
     <div class="pics">
@@ -582,11 +555,10 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
 <section class="chapter rings-sec" aria-labelledby="t4">
   <div class="wrap">
     <div class="head reveal">
-      <div class="chap"><span class="no">肆</span><span class="v">领导力 · 年轮</span></div>
+      <div class="chap"><span class="kids" aria-hidden="true"><img src="assets/img/home/kid-girl.webp" alt="" width="70" height="200"></span><span class="no">肆</span><span class="v">年轮</span></div>
       <div>
-        <span class="en">Leadership grows like rings</span>
         <h2 class="big" id="t4">领导力，像树的年轮<br>一圈一圈长出来。</h2>
-        <p class="lede" style="margin-top:1.4rem">我们的愿景是培养「迎领」21 世纪中华文化素养领袖人才。领导力不是少数人的头衔，而是从认识自己开始，一圈一圈向外长成的能力。</p>
+        <p class="lede">我们的愿景是培养「迎领」21 世纪中华文化素养领袖人才。领导力不是少数人的头衔，而是从认识自己开始，一圈一圈向外长成的能力。</p>
       </div>
     </div>
     <div class="rings-grid">
@@ -609,38 +581,32 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
       </div>
       <div class="ring-steps">
         <article class="ring-step" data-i="1">
-          <span class="lv">Ring I · Self</span>
-          <h3><small>培养</small>个人领导力</h3>
+          <h3>个人领导力</h3>
           <p>领导别人之前，先认识自己。DISC 人格特质与霍兰德职业兴趣测评，帮助孩子看清自己的长处；《南华漫游》成长护照以七种「漫游」印记，记下每一次学习、服务与荣誉的足迹。</p>
-          <div class="proof"><img src="assets/img/home/tablets.webp" alt="学生专注使用平板进行学习" loading="lazy"><span>成长不再只被分数定义——质性评量伴随学生走完中学旅程。</span></div>
+          <div class="proof"><img src="assets/img/home/tablets.webp" alt="学生专注使用平板进行学习" loading="lazy"></div>
         </article>
         <article class="ring-step" data-i="2">
-          <span class="lv">Ring II · Team</span>
-          <h3><small>实践</small>团队领导力</h3>
+          <h3>团队领导力</h3>
           <p>三十一个学会团体、学长团、宿舍自治委员会——从班级到社团，从社团到全校性活动，学生在岗位历练中学会统筹与协调，也学会谦卑。</p>
-          <div class="proof"><img src="assets/img/home/expo.webp" alt="成果展上学生分组讲解作品" loading="lazy"><span>大局观与才德兼备，是在一次次承担中练出来的。</span></div>
+          <div class="proof"><img src="assets/img/home/expo.webp" alt="成果展上学生分组讲解作品" loading="lazy"></div>
         </article>
         <article class="ring-step" data-i="3">
-          <span class="lv">Ring III · Community</span>
-          <h3><small>展现</small>社区领导力</h3>
+          <h3>社区领导力</h3>
           <p>「南华天使」社区关怀自 2012 年成立；2023 年华教节，近二十位学生受林连玉基金之邀，披星戴月绘制林连玉公祭墓园文化墙，以画笔纪念族魂与华教先贤。</p>
-          <div class="proof"><img src="assets/img/home/mural-girl.webp" alt="学生在户外为文化墙壁画上色" loading="lazy"><span>学习不止于校园，也走进曼绒的街巷与社区。</span></div>
+          <div class="proof"><img src="assets/img/home/mural-girl.webp" alt="学生在户外为文化墙壁画上色" loading="lazy"></div>
         </article>
         <article class="ring-step" data-i="4">
-          <span class="lv">Ring IV · Nation</span>
-          <h3><small>根脉</small>社会与家国</h3>
+          <h3>社会与家国</h3>
           <p>跨语言、跨民族、跨文化的文艺大汇演，让多元的马来西亚在同一个舞台相遇；学生更代表马来西亚出征台湾 TIRT 国际赛，夺得亚军与团体总冠军。</p>
-          <div class="proof"><img src="assets/img/home/concert.webp" alt="文艺大汇演舞台灯光下的乐团演出" loading="lazy"><span>兼具本土情怀与国际视野，是我们期许的世界公民。</span></div>
+          <div class="proof"><img src="assets/img/home/concert.webp" alt="文艺大汇演舞台灯光下的乐团演出" loading="lazy"></div>
         </article>
         <article class="ring-step" data-i="5">
-          <span class="lv">Ring V · Heritage</span>
-          <h3><small>以史明鉴 · 溯古瞻前</small>民族与文化</h3>
+          <h3>民族与文化</h3>
           <p>1936 年，曼绒先贤在胶林里点燃华教灯火。今天，廿四节令鼓队远赴福建福清寻根，演出《Mari-mari Sitiawan》登上中国央视报道——把根留住，也把故事带向世界。</p>
-          <div class="proof"><img src="assets/img/cocurricular/qiaoqing-drums.jpg" alt="廿四节令鼓队于福清元洪高级中学校门前开演" loading="lazy"><span>文化不是背诵的知识，而是可以亲手传下去的东西。</span></div>
+          <div class="proof"><img src="assets/img/cocurricular/qiaoqing-drums.jpg" alt="廿四节令鼓队于福清元洪高级中学校门前开演" loading="lazy"></div>
         </article>
       </div>
     </div>
-    <p class="roots reveal">根系本土，枝繁叶茂；<br>学子福泽，众生繁盛。<small>— 南华的领导力，从这里长出去 —</small></p>
   </div>
 </section>
 
@@ -648,9 +614,8 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
 <section class="chapter proof-sec" aria-labelledby="t5">
   <div class="wrap">
     <div class="head reveal">
-      <div class="chap"><span class="no">伍</span><span class="v">实证 · 学生的光</span></div>
+      <div class="chap"><span class="kids" aria-hidden="true"><img src="assets/img/home/kid-boy.webp" alt="" width="64" height="200"></span><span class="no">伍</span><span class="v">实证</span></div>
       <div>
-        <span class="en" style="color:var(--gold)">Proof, not promises</span>
         <h2 class="big" id="t5">一所学校的实力，<br>来自学生的光。</h2>
       </div>
     </div>
@@ -678,10 +643,9 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
 <section class="chapter campus" aria-labelledby="t6">
   <div class="wrap">
     <div class="head reveal">
-      <div class="chap"><span class="no">陆</span><span class="v">校园 · 第二个家</span></div>
+      <div class="chap"><span class="kids" aria-hidden="true"><img src="assets/img/home/kid-girl.webp" alt="" width="70" height="200"></span><span class="no">陆</span><span class="v">校园</span></div>
       <div class="reel-hint">
         <div>
-          <span class="en">A campus to grow in</span>
           <h2 class="big" id="t6">在这里，<br>每一天都有地方可去。</h2>
         </div>
         <a href="facilities/index.html">全部硬体设施 <span class="arrow">→</span></a>
@@ -703,11 +667,10 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
   <div class="bgimg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="head reveal">
-      <div class="chap"><span class="no" style="color:var(--gold)">柒</span><span class="v">南华数码馆</span></div>
+      <div class="chap"><span class="kids" aria-hidden="true"><img src="assets/img/home/kid-boy.webp" alt="" width="64" height="200"></span><span class="no" style="color:var(--gold)">柒</span><span class="v">数码馆</span></div>
       <div>
-        <span class="en" style="color:var(--gold)">Nan Hwa Digital Museum</span>
         <h2 class="big" id="t7">九十年的光，<br>都收藏在这里。</h2>
-        <p class="lede" style="margin-top:1.4rem">校史、九十周年、八年来上千篇校园纪事，还有历届校刊——南华数码馆，让孩子读得到自己学校走过的路。</p>
+        <p class="lede">校史、九十周年、八年来上千篇校园纪事，还有历届校刊——南华数码馆，让孩子读得到自己学校走过的路。</p>
       </div>
     </div>
     <div class="halls reveal">
@@ -724,7 +687,7 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
 <section class="chapter journal" aria-labelledby="t8">
   <div class="wrap">
     <div class="reel-hint reveal">
-      <div><span class="en">Campus journal</span><h2 class="big" id="t8" style="font-size:clamp(1.7rem,3.6vw,2.8rem)">南华的每一天，<br>都被记录下来。</h2></div>
+      <div><h2 class="big" id="t8" style="font-size:clamp(1.7rem,3.6vw,2.8rem)">南华的每一天，<br>都被记录下来。</h2></div>
       <a href="news/index.html" style="color:var(--zhu);font-weight:700;text-decoration:none">进入新闻馆 · 1,198 篇 <span class="arrow">→</span></a>
     </div>
     <div class="cards reveal">
@@ -750,11 +713,10 @@ footer .copy{border-top:1px solid rgba(255,255,255,.08);padding:1.1rem var(--gut
   <div class="bgimg" aria-hidden="true"></div>
   <div class="wrap">
     <div class="head reveal">
-      <div class="chap"><span class="no" style="color:var(--gold)">捌</span><span class="v">迎领 · 下一个孩子</span></div>
+      <div class="chap"><span class="kids" aria-hidden="true"><img src="assets/img/home/kid-girl.webp" alt="" width="70" height="200"><img src="assets/img/home/kid-boy.webp" alt="" width="64" height="200"></span><span class="no" style="color:var(--gold)">捌</span><span class="v">迎领</span></div>
       <div>
-        <span class="en" style="color:var(--gold)">Come and see</span>
         <h2 class="big" id="t9">下一个被看见的，<br>是您的孩子。</h2>
-        <p class="lede" style="margin-top:1.4rem">招收小六毕业生（初一新生）及他校转学生。每年 10 月起开放报名，具体日期以南华独中招生处当年公告为准。最好的了解方式，是带孩子来校园走一走。</p>
+        <p class="lede">招收小六毕业生（初一新生）及他校转学生。每年 10 月起开放报名，具体日期以南华独中招生处当年公告为准。最好的了解方式，是带孩子来校园走一走。</p>
       </div>
     </div>
     <ol class="steps reveal">

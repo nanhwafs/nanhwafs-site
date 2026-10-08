@@ -31,6 +31,8 @@
     var b = pulse(c - 2.9); if (Math.floor((t + ph) / 3.4) % 3 === 1) b = Math.max(b, pulse(c - 3.12));
     return b;
   }
+  // 吉祥物出场表：[起点秒, 在场者]（g 女 / b 男）。两人同框只在「学生是主体」(叁) 与终章报名 (柒) 之前
+  var CAST = [[0, 'g'], [5, 'b'], [8.7, 'gb'], [13.4, 'g'], [18.2, 'b'], [24.5, 'g'], [28.8, 'gb']];
   var LABELS = [['学生', '主体'], ['教师', '引路人'], ['家长', '港湾'], ['学校', '灯塔']];
   var RINGS = ['个人', '团队', '社区', '社会与家国', '民族与文化'];
   var CARDS = [['stone', '南华独中'], ['pool', '校园泳池'], ['block', '校舍'], ['arch', '牌楼']];
@@ -61,18 +63,14 @@
       '<div class="t latin" data-k="s1c">Nan Hwa High School · Manjung, Perak</div>' +
       '<div class="t latin" data-k="s2a">Lot 2446, Kg. Sungai Wangi · Ayer Tawar</div>' +
       // 叁
-      '<div class="t kick" data-k="s3k">壹 · 主体</div>' +
       '<div class="t big shadow" data-k="s3h">' + chars('学生是主体') + '</div>' +
       '<div class="t sub shadow" data-k="s3s">学生的未来，是我们的目标，<br>也是我们的承诺。</div>' +
       // 肆
-      '<div class="t kick" data-k="s4k">贰 · 校园</div>' +
       '<div class="t big shadow" data-k="s4h">' + chars('一步一步，走进南华') + '</div>' +
       // 伍
-      '<div class="t kick" data-k="s5k">叁 · 同行</div>' +
       '<div class="t big" data-k="s5h">' + chars('四种力量，与孩子同行') + '</div>' +
       '<div class="t big" data-k="s5x">' + chars('学校是灯塔，是指引，也是「迎领」') + '</div>' +
       // 陆
-      '<div class="t kick" data-k="s6k">肆 · 领导力</div>' +
       '<div class="t big" data-k="s6h">' + chars('领导力，像年轮') + '<br>' + chars('一圈一圈长出来') + '</div>' +
       '<div class="t big" data-k="s6x" style="color:var(--gold)">' + chars('根系本土，枝繁叶茂') + '</div>' +
       '<div class="t sub" data-k="s6y">学子福泽，众生繁盛</div>' +
@@ -142,15 +140,16 @@
       L = { W: W, H: H, P: P, u: u, diag: Math.hypot(W, H) };
       L.D1 = P ? W * .8 : H * .66;
       L.pc = P ? [W / 2, H * .38] : [W / 2, H * .5];
-      L.Hc = P ? Math.min(H * .4, W * 1.05) : H * .52;
+      L.Hc = P ? Math.min(H * .4, W * 1.05) : H * .52;   // 年轮/枝条的尺度
+      L.Hm = P ? H * .2 : H * .28;                          // 吉祥物身高：全片固定，小于画面三分之一
       L.gy = H * .965;
       L.src = P ? [W / 2, H * .5] : [W / 2, H * .4];
       // 字号
       fontPx($.s1a, u * (P ? 11 : 9)); fontPx($.s1b, u * (P ? 3.4 : 2.6)); fontPx($.s1c, u * (P ? 3.6 : 2.6)); fontPx($.s2a, u * (P ? 3.4 : 2.4));
-      fontPx($.s3k, u * (P ? 2.6 : 1.9)); fontPx($.s3h, u * (P ? 13 : 10)); fontPx($.s3s, u * (P ? 3.8 : 2.8));
-      fontPx($.s4k, u * (P ? 2.6 : 1.9)); fontPx($.s4h, u * (P ? 8 : 6.4));
-      fontPx($.s5k, u * (P ? 2.6 : 1.9)); fontPx($.s5h, u * (P ? 6.4 : 5.2)); fontPx($.s5x, u * (P ? 5 : 4.8));
-      fontPx($.s6k, u * (P ? 2.6 : 1.9)); fontPx($.s6h, u * (P ? 5.6 : 5.4)); fontPx($.s6x, u * (P ? 8.6 : 7.6)); fontPx($.s6y, u * (P ? 3.6 : 3));
+      fontPx($.s3h, u * (P ? 13 : 10)); fontPx($.s3s, u * (P ? 3.8 : 2.8));
+      fontPx($.s4h, u * (P ? 8 : 6.4));
+      fontPx($.s5h, u * (P ? 6.4 : 5.2)); fontPx($.s5x, u * (P ? 5 : 4.8));
+      fontPx($.s6h, u * (P ? 5.6 : 5.4)); fontPx($.s6x, u * (P ? 8.6 : 7.6)); fontPx($.s6y, u * (P ? 3.6 : 3));
       fontPx($.s7h, u * (P ? 13 : 9.6)); fontPx($.s7l, u * (P ? 3.8 : 2.8)); fontPx($.s7x, u * (P ? 6.4 : 4.4));
       fontPx($.seal, u * (P ? 3.4 : 2.4)); $.seal.style.height = '2.3em'; $.seal.style.width = '2.3em'; $.seal.style.padding = '.12em .1em';
       $.s3s.style.whiteSpace = 'nowrap';
@@ -163,10 +162,10 @@
       CARDS.forEach(function (c, i) { var el = $['card' + i]; el.style.width = cw + 'px'; el.style.height = (cw * .75 + u * 2.6) + 'px'; });
       // 角色
       ['girl', 'boy'].forEach(function (n) {
-        var c = CHAR[n], el = $[n], w = L.Hc * c.w / c.h;
-        el.style.width = w + 'px'; el.style.height = L.Hc + 'px';
-        el.style.setProperty('--px', (c.px * 100) + '%'); el.style.setProperty('--py', (L.Hc * c.neck / c.h) + 'px');
-        size[n] = { w: w, h: L.Hc };
+        var c = CHAR[n], el = $[n], w = L.Hm * c.w / c.h;
+        el.style.width = w + 'px'; el.style.height = L.Hm + 'px';
+        el.style.setProperty('--px', (c.px * 100) + '%'); el.style.setProperty('--py', (L.Hm * c.neck / c.h) + 'px');
+        size[n] = { w: w, h: L.Hm };
         var kx = w / c.w, lids = el.querySelectorAll('.lid');
         c.eyes.forEach(function (e, i) { var s = lids[i].style; s.left = e[0] * kx + 'px'; s.top = e[1] * kx + 'px'; s.width = (e[2] - e[0]) * kx + 'px'; s.height = (e[3] - e[1]) * kx + 'px'; s.background = c.skin; s.boxShadow = '0 0 ' + (3 * kx) + 'px ' + (2 * kx) + 'px ' + c.skin; s.setProperty('--lw', Math.max(1.5, 5 * kx) + 'px'); });
       });
@@ -265,11 +264,9 @@
       var s3out = seg(t, 12.9, 13.5);
       var lx = W * .07;
       if (P) {
-        pos($.s3k, W / 2, H * .09, 1, 0, seg(t, 9.4, 9.9) * (1 - s3out));
         kinetic($.s3h, t, 9.6, .09, u * 6); pos($.s3h, W / 2, H * .16 - s3out * u * 4, 1, 0, 1 - s3out);
         pos($.s3s, W / 2, H * .25, 1, 0, seg(t, 10.7, 11.4) * (1 - s3out)); $.s3s.style.textAlign = 'center';
       } else {
-        pos($.s3k, lx, H * .25, 1, 0, seg(t, 9.4, 9.9) * (1 - s3out), 0, .5);
         kinetic($.s3h, t, 9.6, .09, u * 6); pos($.s3h, lx, H * .37 - s3out * u * 4, 1, 0, 1 - s3out, 0, .5);
         pos($.s3s, lx, H * .52 + (1 - out3(seg(t, 10.7, 11.5))) * u * 2, 1, 0, seg(t, 10.7, 11.4) * (1 - s3out), 0, .5);
       }
@@ -277,10 +274,8 @@
       /* ---------- 肆 · 走进南华 ---------- */
       var s4out = seg(t, 17.6, 18.2);
       if (P) {
-        pos($.s4k, W / 2, H * .09, 1, 0, seg(t, 13.6, 14.1) * (1 - s4out));
         kinetic($.s4h, t, 13.8, .06, u * 5); pos($.s4h, W / 2, H * .15, 1, 0, 1 - s4out);
       } else {
-        pos($.s4k, lx, H * .12, 1, 0, seg(t, 13.6, 14.1) * (1 - s4out), 0, .5);
         kinetic($.s4h, t, 13.8, .06, u * 5); pos($.s4h, lx, H * .2, 1, 0, 1 - s4out, 0, .5);
       }
       CARDS.forEach(function (c, i) {
@@ -314,7 +309,6 @@
         $['lab' + i].style.color = i === 3 ? '#F6D58A' : '#F4EFE4';
       });
       var hk = P ? [W / 2, H * .085] : [W / 2, H * .1];
-      pos($.s5k, hk[0], hk[1] - u * 3.4, 1, 0, seg(t, 18.8, 19.3) * (1 - seg(t, 22.6, 23.0)));
       kinetic($.s5h, t, 18.9, .05, u * 4); pos($.s5h, hk[0], hk[1] + u * 2, 1, 0, 1 - seg(t, 22.6, 23.0));
       kinetic($.s5x, t, 22.9, .04, u * 4); pos($.s5x, hk[0], hk[1] + u * 2, 1, 0, seg(t, 22.85, 22.9) * (1 - seg(t, 24.1, 24.6)));
 
@@ -341,10 +335,8 @@
       $.ground.setAttribute('stroke-dashoffset', (L.gl / 2 + W * .05) * (1 - out3(seg(t, 26.7, 27.7))));
       $.ground.setAttribute('opacity', (t > 26.7 ? .8 : 0) * (1 - rOut));
       if (P) {
-        pos($.s6k, W / 2, H * .06, 1, 0, seg(t, 24.6, 25.1) * (1 - seg(t, 26.8, 27.2)));
         kinetic($.s6h, t, 24.7, .035, u * 4); pos($.s6h, W / 2, H * .12, 1, 0, 1 - seg(t, 26.8, 27.2));
       } else {
-        pos($.s6k, lx, H * .1, 1, 0, seg(t, 24.6, 25.1) * (1 - seg(t, 26.8, 27.2)), 0, .5);
         kinetic($.s6h, t, 24.7, .05, u * 4); pos($.s6h, lx, H * .42, 1, 0, 1 - seg(t, 26.8, 27.2), 0, .5);
       }
       kinetic($.s6x, t, 27.0, .08, u * 6);
@@ -367,39 +359,23 @@
         cf.fillStyle = t > 29.5 ? 'rgba(181,133,60,' + (a * .6) + ')' : 'rgba(240,200,110,' + a + ')'; cf.fill();
       });
 
-      /* ---------- 角色 ---------- */
-      var Hc = L.Hc, enter = { girl: 9.0, boy: 9.28 };
-      var pairX;
-      if (P) pairX = W / 2; else pairX = lerp(W * .7, W / 2, io3(seg(t, 13.8, 15.6)));
-      var fin = io3(seg(t, 29.0, 30.4));
-      var walk = seg(t, 13.6, 14.0) * (1 - seg(t, 17.8, 18.4));
+      /* ---------- 角色：站定不动，只在换幕时交替淡入淡出 ----------
+         女左男右，各幕轮流一人在场暗示换章；两人同框只留给最重要的两处——「学生是主体」与终章报名，
+         且比那行字早半拍出现。只保留眨眼，不位移、不弹跳、不放大。 */
       ['girl', 'boy'].forEach(function (n, j) {
         var el = $[n], m = size[n], side = j ? 1 : -1;
-        var dt = t - enter[n], sp = spring(dt, 1.5, .42);
-        var ph = j * 1.7;
-        var bob = -Math.abs(Math.sin(t * 6.4 + ph)) * Hc * .028 * walk;
-        var tilt = 3.2 * Math.sin(t * 1.5 + ph) + Math.sin(t * 6.4 + ph) * 1.6 * walk;
-        var rot = Math.sin(t * 6.4 + ph) * 1.8 * walk;
-        // 落地压扁
-        var land = dt > .28 ? Math.exp(-(dt - .28) * 7) * Math.sin((dt - .28) * 20) * .06 : 0;
-        var cx = pairX + side * Hc * .19, gy = L.gy, s = 1;
-        // 终章：分站两侧、放大
-        var fs = P ? Math.min(H * .44, W * .98) / Hc : (H * .64) / Hc;
-        var fx = P ? W / 2 + side * W * .2 : W / 2 + side * W * .3, fgy = H * .985;
-        cx = lerp(cx, fx, fin); gy = lerp(gy, fgy, fin); s = lerp(1, fs, fin);
-        var hop = Math.sin(fin * Math.PI) * Hc * .12;
-        var y = gy - m.h * s + (1 - sp) * Hc * 1.15 + bob - hop;
-        el.style.transform = 'translate(' + (cx - m.w * s / 2).toFixed(2) + 'px,' + y.toFixed(2) + 'px) rotate(' + rot.toFixed(2) + 'deg) scale(' + s.toFixed(4) + ')';
+        var v = CAST[0][1].indexOf(n[0]) >= 0 ? 1 : 0;
+        for (var c = 1; c < CAST.length; c++) v = lerp(v, CAST[c][1].indexOf(n[0]) >= 0 ? 1 : 0, seg(t, CAST[c][0] - .2, CAST[c][0] + .2));
+        var cx = W / 2 + side * W * (P ? .36 : .43), gy = P ? H * .985 : L.gy;
         el.style.transformOrigin = '0 0';
-        el.style.opacity = dt > 0 ? 1 : 0;
-        var endTilt = t > 30.2 ? side * -5 * out3(seg(t, 30.2, 31)) + 2.4 * Math.sin(t * 2.2 + ph) : 0;
-        el.lastChild.style.transform = 'rotate(' + ((tilt * (1 - fin)) + endTilt).toFixed(2) + 'deg)';
+        el.style.transform = 'translate(' + (cx - m.w / 2).toFixed(2) + 'px,' + (gy - m.h).toFixed(2) + 'px)';
+        el.style.opacity = v;
+        el.style.visibility = v > 0 ? 'visible' : 'hidden';
         var bl = blink(t, CHAR[n].ph), lids = el.querySelectorAll('.lid');
         lids[0].style.transform = lids[1].style.transform = 'scaleY(' + bl.toFixed(3) + ')';
-        el.firstChild.style.transform = 'scale(' + (1 + land * .4 - .004 * Math.sin(t * 2.4 + ph)).toFixed(4) + ',' + (1 - land + .006 * Math.sin(t * 2.4 + ph)).toFixed(4) + ')';
-        var sh = $[j ? 'shb' : 'shg'], sw = m.w * s * 1.3;
-        sh.style.transform = 'translate(' + (cx - 50) + 'px,' + (gy - 12) + 'px) scale(' + (sw / 100 * (1 + bob / Hc * 2)).toFixed(3) + ',' + (sw / 100 * .5).toFixed(3) + ')';
-        sh.style.opacity = dt > 0 ? clamp(sp) * (t > 29 ? .6 : .9) : 0;
+        var sh = $[j ? 'shb' : 'shg'], sw = m.w * 1.3;
+        sh.style.transform = 'translate(' + (cx - 50) + 'px,' + (gy - 12) + 'px) scale(' + (sw / 100).toFixed(3) + ',' + (sw / 100 * .5).toFixed(3) + ')';
+        sh.style.opacity = v * (t > 29.5 ? .5 : .8);
       });
 
       /* ---------- 柒 · 迎领 ---------- */

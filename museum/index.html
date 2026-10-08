@@ -31,8 +31,12 @@ a{color:inherit}
 .top{position:absolute;inset:0 0 auto 0;z-index:5;display:flex;justify-content:space-between;align-items:center;height:72px;padding:0 var(--gut)}
 .top a{text-decoration:none;display:flex;align-items:center;gap:.7rem;font-family:var(--serif);font-weight:900;letter-spacing:.12em}
 .top img{height:40px;width:auto}
-.top .back{font-family:var(--sans);font-weight:400;font-size:.9rem;letter-spacing:.08em;color:var(--dim)}
+.top .back{font-family:var(--sans);font-weight:400;font-size:.9rem;letter-spacing:.08em;color:var(--dim);padding:.5rem 1rem;border-radius:999px;position:relative;overflow:hidden}
 .top .back:hover{color:var(--gold)}
+.top .back.glass{backdrop-filter:blur(14px) saturate(1.4);border:1px solid rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.top .back.glass::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent);transform:translateX(-120%);transition:transform .65s cubic-bezier(0.16,1,0.3,1)}
+.top .back.glass:hover::after{transform:translateX(220%)}
+.top .back.glass:active{transform:scale(0.97)}
 
 .gate{position:relative;min-height:92vh;min-height:92svh;display:flex;align-items:flex-end;overflow:hidden}
 .gate .ph{position:absolute;inset:0;background:url(../history/img/era3-1972.jpg) center 40%/cover no-repeat;filter:sepia(.65) contrast(1.08) brightness(.5)}
@@ -56,6 +60,7 @@ a{color:inherit}
 .hall .go i{font-style:normal;display:inline-block;transition:transform .3s var(--ease)}
 a.hall:hover b{color:var(--gold)} a.hall:hover .go i{transform:translateX(5px)}
 .hall.soon .go{color:var(--faint)}
+.hall.soon .go.neon{color:#FF8A00}
 .hall .thumb{position:absolute;right:9rem;top:50%;width:220px;aspect-ratio:4/3;object-fit:cover;border-radius:3px;opacity:0;
   transform:translateY(-50%) rotate(-2deg) scale(.96);transition:opacity .4s ease,transform .5s var(--ease);pointer-events:none;filter:sepia(.25)}
 @media (hover:hover) and (min-width:1000px){ a.hall:hover .thumb{opacity:1;transform:translateY(-50%) rotate(-2deg)} }
@@ -70,26 +75,49 @@ a.hall:hover b{color:var(--gold)} a.hall:hover .go i{transform:translateX(5px)}
 footer{margin-top:clamp(4rem,9vw,6rem);border-top:1px solid var(--rule);padding:1.6rem var(--gut);text-align:center;font-size:.8rem;color:var(--faint)}
 footer a{color:var(--dim);text-decoration:none} footer a:hover{color:var(--gold)}
 
+.neon{color:#FF8A00;border:1px solid #FF8A00;border-radius:100px;animation:neon-pulse 2s ease-in-out infinite}
+@keyframes neon-pulse{0%,100%{text-shadow:0 0 4px #FF8A00;box-shadow:0 0 6px -1px #FF8A00,inset 0 0 6px -2px #FF8A00}50%{text-shadow:0 0 12px #FF8A00,0 0 22px #FF8A00;box-shadow:0 0 18px 0 #FF8A00,inset 0 0 12px -2px #FF8A00}}
+.tilt-zone{perspective:800px}
+.tilt-card{transition:transform .15s ease-out;transform-style:preserve-3d}
+.surface{position:relative;overflow:hidden}
+.surface::after{content:"";position:absolute;top:0;left:-60%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,0.18),transparent);transform:skewX(-18deg);transition:left .7s cubic-bezier(0.16,1,0.3,1)}
+.surface:hover::after{left:120%}
+.card{transition:transform .5s cubic-bezier(0.34,1.56,0.64,1),box-shadow .5s cubic-bezier(0.34,1.56,0.64,1)}
+.card:hover{transform:translateY(-10px);box-shadow:0 18px 40px -12px rgba(0,0,0,0.7)}
+.shimmer-text{background:linear-gradient(100deg,#6E6C68 30%,#FF8A00 50%,#6E6C68 70%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 3s linear infinite}
+@keyframes shimmer{to{background-position:-200% center}}
+.spotlight{position:relative}
+.spotlight-glow{position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,138,0,0.22),transparent 70%);transform:translate(-50%,-50%);pointer-events:none}
 .has-js .reveal{opacity:0;transform:translateY(20px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
 .has-js .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){ .has-js .reveal{opacity:1;transform:none;transition:none} .hall .thumb,.hall .go i{transition:none} }
+/* 响应式护栏（飞鑫加）：桌面视觉不动，只管窄屏与「减少动画」偏好；!important 是为了压过画布导出的内联样式 */
+.top .back{margin-left:auto}
+.gate .wrap>img{left:auto!important;right:-97px!important}
+@media (max-width:860px){
+  .gate .wrap{grid-template-columns:1fr}
+  .gate p{width:auto!important;height:auto!important;max-width:100%!important}
+  .gate .wrap>img{width:min(72vw,340px)!important;height:auto!important;right:-14vw!important;top:-10px!important}
+  .hall>div{grid-column:2}
+  .surface::after{left:-150%}
+}
+@media (prefers-reduced-motion:reduce){ .neon{animation:none} .shimmer-text{animation:none;background-position:50% center} .tilt-card,.surface::after{transition:none} }
 </style>
 </head>
 <body>
 <header class="top">
-  <a href="../index.html"><img src="../assets/img/crest-ivory.png" alt="南华独中校徽"><span>南华独立中学</span></a>
-  <a class="back" href="../index.html">← 返回首页</a>
+  <a class="back glass" href="../index.html">← 返回首页</a>
 </header>
 
 <section class="gate">
   <div class="ph" role="img" aria-label="早年南华校舍旧照"></div>
   <div class="wrap">
-    <span class="vt" aria-hidden="true">一九三六 · 二〇二六</span>
     <div>
       <span class="en">Nan Hwa Digital Museum</span>
-      <h1>南华数码馆</h1>
-      <p>以史明鉴，溯古瞻前。九十年的校史、照片、刊物与日常，在这里被好好收藏，也让每一届孩子读得到自己学校走过的路。</p>
+      <h1 class="shimmer-text">南华数码馆</h1>
+      <p style="color: #C1B394; width: 657px; height: 194px"><i>以史明鉴，溯古瞻前。</i><br>九秩的校史 尚存的相片与刊物 记忆的回响<br>珍藏在云端 过去也许有血有泪 但雨过天晴的彩虹<br>打造出孩子的求学路 让孩子读一读 先贤与华教风雨来时路</p>
     </div>
+    <img src="../assets/img/crest-ivory.png" alt="南华独中校徽" style="object-fit: cover; opacity: 0.16; position: absolute; top: -38px; width: 483px; height: 473px; left: 854px">
   </div>
 </section>
 
@@ -97,36 +125,37 @@ footer a{color:var(--dim);text-decoration:none} footer a:hover{color:var(--gold)
   <section class="halls" aria-labelledby="hh">
     <h2 id="hh" class="reveal">馆藏 · 四个展厅</h2>
 
-    <a class="hall reveal" href="../history/index.html">
+    <div class="tilt-zone">
+    <a class="hall reveal tilt-card" href="../history/index.html">
       <span class="no">I</span>
       <span><b>南华春秋</b><small>The Chronicle</small></span>
       <p>一部从胶林里写起的校史：1936 年四校合并创立，历经战火停办、独中复兴、新校迁建，直到今日。</p>
-      <span class="go">入馆 <i>→</i></span>
-      <img class="thumb" src="../history/img/era4-1986.jpg" alt="" loading="lazy">
-    </a>
+      <span class="go neon" style="opacity: 1; border-radius: 6px; padding-top: 8px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px">展厅入口</span>
+      </a>
+    </div>
 
-    <a class="hall reveal" href="../90/index.html">
+    <a class="hall reveal surface" href="../90/index.html">
       <span class="no">II</span>
       <span><b>九十周年</b><small>1936 — 2026</small></span>
       <p>九十年风雨兼程，育见百年。校庆专题、校友与讲座纪事。</p>
-      <span class="go">入馆 <i>→</i></span>
-      <img class="thumb" src="../assets/img/90th/photos/alumni-poster.webp" alt="" loading="lazy">
+      <span class="go neon" style="opacity: 1; border-radius: 6px; padding-top: 8px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px">展厅入口</span>
+      </a>
+
+    <a class="hall reveal surface" href="https://nanhwappd.github.io/kanwu/">
+      <span class="no">IV</span>
+      <span><b>校刊书架</b><small>The Magazine Shelf</small></span>
+      <div><p>1962 年起的历届校刊，已数码化，可在线翻阅。</p>
+        <div class="years" aria-hidden="true"><span>1962</span><span>·</span><span>1985</span><span>·</span><span>2005</span><span>·</span><span>2018</span><span>·</span><span>2024</span></div></div>
+      <span class="go neon" style="opacity: 1; border-radius: 6px; padding-top: 8px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px"><span style="letter-spacing: 2.6488px;">展厅入口</span></span>
     </a>
 
-    <a class="hall reveal" href="../news/index.html">
+    <div class="tilt-zone">
+    <a class="hall reveal tilt-card" href="../news/index.html">
       <span class="no">III</span>
       <span><b>每日南华</b><small>The Daily Journal</small></span>
       <p>2018 至 2026 年，1,198 篇校园纪事，按年份收藏，仍在继续。</p>
-      <span class="go">入馆 <i>→</i></span>
-      <img class="thumb" src="../news/2026/img/20260628-1-0.jpg" alt="" loading="lazy">
-    </a>
-
-    <div class="hall soon reveal">
-      <span class="no">IV</span>
-      <span><b>校刊书架</b><small>The Magazine Shelf</small></span>
-      <div><p>1962 年起的历届校刊，正在逐本数码化整理。开馆后可在线翻阅。</p>
-        <div class="years" aria-hidden="true"><span>1962</span><span>·</span><span>1985</span><span>·</span><span>2005</span><span>·</span><span>2018</span><span>·</span><span>2024</span></div></div>
-      <span class="go">筹备中</span>
+      <span class="go neon" style="opacity: 1; border-radius: 6px; padding-top: 8px; padding-bottom: 8px; padding-left: 8px; padding-right: 8px">展厅入口</span>
+      </a>
     </div>
   </section>
 
@@ -138,6 +167,25 @@ footer a{color:var(--dim);text-decoration:none} footer a:hover{color:var(--gold)
 document.documentElement.classList.add('has-js');
 const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting){ x.target.classList.add('in'); io.unobserve(x.target); } }), {rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+const spotlightEl = document.querySelector('.spotlight');
+if (spotlightEl) {
+  const glow = spotlightEl.querySelector('.spotlight-glow');
+  spotlightEl.addEventListener('pointermove', e => {
+    const r = spotlightEl.getBoundingClientRect();
+    glow.style.left = (e.clientX - r.left) + 'px';
+    glow.style.top = (e.clientY - r.top) + 'px';
+  });
+}
+document.querySelectorAll('.tilt-zone').forEach(tiltZone => {
+  const tiltCard = tiltZone.querySelector('.tilt-card');
+  if (!tiltCard) return;
+  tiltZone.addEventListener('pointermove', e => {
+    const r = tiltZone.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    tiltCard.style.transform = `rotateY(${x*8}deg) rotateX(${-y*8}deg)`;
+  });
+  tiltZone.addEventListener('pointerleave', () => { tiltCard.style.transform = ''; });
+});
 </script>
 </body>
 </html>

@@ -111,6 +111,12 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
 @media (prefers-reduced-motion: reduce) {
   .has-js .reveal { opacity:1; transform:none; transition:none; }
 }
+/* 玻璃按钮（同数码馆页返回键）：磨砂+内高光+悬停光扫+按下微缩；hover/active 沿用上方既有规则 */
+.family-nav a { position:relative; overflow:hidden; -webkit-backdrop-filter:blur(14px) saturate(1.4); backdrop-filter:blur(14px) saturate(1.4); border-color:rgba(255,255,255,.12); box-shadow:inset 0 1px 0 rgba(255,255,255,.18); }
+.family-nav a::after { content:""; position:absolute; inset:0; background:linear-gradient(105deg,transparent,rgba(255,255,255,.35),transparent); transform:translateX(-120%); transition:transform .65s cubic-bezier(0.16,1,0.3,1); pointer-events:none; }
+.family-nav a:hover::after { transform:translateX(220%); }
+.family-nav a:active { transform:scale(.97); }
+@media (prefers-reduced-motion:reduce){ .family-nav a::after { transition:none; } }
 </style>
 </head>
 <body>

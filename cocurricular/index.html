@@ -78,8 +78,6 @@ section { max-width:960px; margin:0 auto; padding:3.2rem clamp(1.2rem,4vw,3rem) 
 .pillar-text h3 { font-family:var(--serif); font-weight:800; color:var(--ink); font-size:clamp(1.1rem,2.4vw,1.35rem); margin-bottom:.8rem; }
 .pillar-text p { font-size:.92rem; color:var(--ink); line-height:1.9; margin-bottom:.9rem; font-weight:300; text-align:justify; text-justify:inter-character; }
 
-.tag-grid { display:flex; flex-wrap:wrap; gap:.55rem; }
-.tag-grid span { font-size:.84rem; padding:.4rem .95rem; background:var(--paper); border:1px solid var(--rule); border-radius:999px; color:var(--ink); font-weight:400; }
 
 .policy-statement { position:relative; overflow:hidden; border-radius:.6rem;
   background:linear-gradient(135deg,var(--gold-deep),var(--gold)); padding:clamp(2.4rem,7vw,4rem) 1.5rem;
@@ -133,6 +131,52 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
   .family-nav::-webkit-scrollbar { display:none; }
   .family-nav a { flex:none; }
 }
+/* ===== 入口照片格（10-10，同学术课程页）=====
+   排法＝Flickr／Google Photos 的「等高行」：同一行照片等高、宽度按各自原比例，整行左右对齐——一像素不裁。
+   行怎么分由下方脚本按容器宽度算（求每行高度最接近目标行高）；没 JS 时退成普通折行。
+   外框沿用本页「领域介绍」照片的白卡纸框，图说＝衬线中文＋金色英文（同 .sec-head .en），不用手册的红标签。 */
+.ph-grid { display:flex; flex-wrap:wrap; column-gap:14px; }   /* 行距不用 row-gap：换行用的 .br 自成一行会多吃一次间距 */
+.ph-grid > .br { flex-basis:100%; height:0; }
+.ph { flex:1 1 150px; min-width:0; margin:0 0 14px; }
+.ph-grid.is-justified .ph { flex:none; }
+.ph > button { display:flex; flex-direction:column; width:100%; height:100%; padding:6px; border:1px solid var(--rule);
+  background:var(--paper); box-shadow:0 6px 16px rgba(90,60,20,.14); cursor:zoom-in; font:inherit; color:inherit; text-align:left;
+  transition:box-shadow .35s ease, transform .35s cubic-bezier(.16,1,.3,1); }
+.ph > button:hover { transform:translateY(-3px); box-shadow:0 12px 26px rgba(90,60,20,.2); }
+.ph > button:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
+.ph img { display:block; width:100%; height:auto; }
+.ph .lab { display:block; padding:.55rem .25rem .2rem; line-height:1.4; }
+.ph .lab b { display:block; font-family:var(--serif); font-weight:700; font-size:.92rem; color:var(--ink); letter-spacing:.04em; }
+.ph .lab i { display:block; font-style:normal; font-size:.64rem; color:var(--gold); letter-spacing:.14em; margin-top:.15rem; }
+.ph-empty { display:grid; place-items:center; aspect-ratio:4/3; background:var(--mount); font-size:.76rem; color:var(--muted-lt); letter-spacing:.12em; }
+.ph.is-empty > button { cursor:pointer; }
+@media (prefers-reduced-motion:reduce) { .ph > button { transition:none; } .ph > button:hover { transform:none; } }
+
+#lb { margin:auto; width:min(920px,94vw); max-height:92vh; padding:0; border:1px solid var(--rule); border-radius:2px; background:var(--paper); color:var(--ink); overflow:auto; }
+#lb img[hidden] { display:none; }
+#lb::backdrop { background:rgba(20,15,8,.8); }
+#lb img { display:block; width:100%; max-height:62vh; object-fit:contain; background:var(--paper); }   /* 手册图自带白底圆角，底色用纸色才不露白角 */
+#lb .txt { padding:1.1rem 1.4rem 1.4rem; }
+#lb h3 { font-family:var(--serif); font-weight:800; font-size:1.25rem; }
+#lb .fl { font-size:.8rem; color:var(--muted); margin-top:.1rem; }
+#lb .mem { font-size:.86rem; color:var(--terracotta); margin-top:.5rem; }
+#lb .txt > p:not(.fl):not(.mem):not(.rel):not(.cr) { font-size:.92rem; margin-top:.6rem; }
+#lb .rel { font-size:.78rem; color:var(--gold-deep); letter-spacing:.12em; margin-top:1rem; }
+#lb ul { list-style:none; margin-top:.3rem; }
+#lb li { display:flex; gap:.8rem; justify-content:space-between; align-items:baseline; padding:.45rem 0; border-top:1px solid var(--rule); font-size:.9rem; }
+#lb li a { color:var(--ink); text-decoration:none; min-width:0; overflow-wrap:anywhere; }
+#lb li a:hover { color:var(--terracotta); text-decoration:underline; }
+#lb li time { flex:none; font-size:.75rem; color:var(--muted-lt); }
+#lb .cr { font-size:.72rem; color:var(--muted-lt); margin-top:1rem; }
+#lb .x { position:sticky; top:0; float:right; margin:.5rem .5rem -3rem 0; z-index:1; width:2.6rem; height:2.6rem; border-radius:50%;
+  border:0; background:rgba(0,0,0,.55); color:#fff; font-size:1.5rem; line-height:1; cursor:pointer; }
+@media (min-width:840px) {   /* 桌面：图左字右，相关报道不必往下滚 */
+  #lb[open] { display:grid; grid-template-columns:minmax(0,3fr) minmax(0,2fr); width:min(1100px,92vw); }
+  #lb img { max-height:86vh; height:100%; }
+  #lb img[hidden] + .txt { grid-column:1 / -1; }
+  #lb .txt { padding:2.6rem 1.6rem 1.6rem; align-self:center; }
+  #lb .x { position:absolute; top:.6rem; right:.6rem; float:none; margin:0; background:rgba(0,0,0,.08); color:var(--ink); }
+}
 </style>
 </head>
 <body>
@@ -185,12 +229,38 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
       </div>
     </div>
   </div>
-  <div class="tag-grid" style="margin-top:2.6rem;">
-    <span>龙狮团</span><span>廿四节令鼓</span><span>管乐团</span><span>舞蹈团</span><span>华乐团</span><span>中华武术</span>
-    <span>童军团</span><span>圣约翰救伤队</span><span>少狮会</span>
-    <span>学长团</span><span>图书馆服务团</span><span>宿舍自治委员会</span><span>舞台艺术设计与技术学会</span><span>公关社</span><span>南华小尖兵</span>
-    <span>农业与科技学会</span><span>中华文化及艺术学会</span><span>棋社</span><span>马来西亚多元文化学会</span><span>摄影学会</span><span>扯铃学会</span><span>射箭学会</span><span>合唱团</span><span>剧场艺术学会</span><span>电影学会</span>
-    <span>篮球培训队</span><span>羽球培训队</span><span>乒乓培训队</span><span>游泳培训队</span><span>排球培训队</span><span>辩论培训队</span>
+  <div class="ph-grid" style="margin-top:2.6rem;">
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9023.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9023.webp" width="885" height="473" alt="龙狮团" loading="lazy"><span class="lab"><b>龙狮团</b><i>Lion Dance Club</i></span></button><div class="more" hidden><h3>龙狮团</h3><p class="fl">Kelab Tarian Singa ｜ Lion Dance Club</p><p class="rel">新闻馆相关报道（共 7 篇）</p><ul><li><a href="../news/2025/20251215-1.html">南华独中龙狮团贺新岁·南风送暖催骏马</a><time>2025-12-15</time></li><li><a href="../news/2025/20250110-1.html">南华独中龙狮团贺新岁·现今开放预订新春采青</a><time>2025-01-10</time></li><li><a href="../news/2024/20240827-1.html">南华独中龙狮团表现亮眼·北马区孔圣庙中华杯荣获铜奖</a><time>2024-08-27</time></li></ul><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9035.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9035.webp" width="885" height="473" alt="廿四节令鼓" loading="lazy"><span class="lab"><b>廿四节令鼓</b><i>24 Festive Drums Club</i></span></button><div class="more" hidden><h3>廿四节令鼓</h3><p class="fl">Kelab Gendang 24 Perayaan ｜ 24 Festive Drums Club</p><p class="rel">新闻馆相关报道（共 13 篇）</p><ul><li><a href="../news/2026/20260622-1.html">狂澜尽处见曙光·南华独中廿四节令鼓队</a><time>2026-06-22</time></li><li><a href="../news/2024/20241001-1.html">中国央视·马来西亚曼绒南华独中24节令鼓</a><time>2024-10-01</time></li><li><a href="../news/2024/20240107-1.html">南华独中二十四节令鼓·演绎实兆远历史人文获奖受肯定</a><time>2024-01-07</time></li></ul><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9029.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9029.webp" width="885" height="473" alt="管乐团" loading="lazy"><span class="lab"><b>管乐团</b><i>Symphonic Band Club</i></span></button><div class="more" hidden><h3>管乐团</h3><p class="fl">Kelab Pancaragam Simfoni ｜ Symphonic Band Club</p><p class="rel">新闻馆相关报道（共 13 篇）</p><ul><li><a href="../news/2026/20260608-2.html">捷报！南华管乐队“春蕾”再夺金奖</a><time>2026-06-08</time></li><li><a href="../news/2024/20240911-1.html">台湾嘉义大学音乐系到访·南华独中管乐团获益良多</a><time>2024-09-11</time></li><li><a href="../news/2025/20250904-1.html">南华独中 2025年·文艺大汇演 精彩回顾之四</a><time>2025-09-04</time></li></ul><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9017.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9017.webp" width="882" height="451" alt="舞蹈团" loading="lazy"><span class="lab"><b>舞蹈团</b><i>Dancing Club</i></span></button><div class="more" hidden><h3>舞蹈团</h3><p class="fl">Kelab Menari ｜ Dancing Club</p><p class="rel">新闻馆相关报道（共 23 篇）</p><ul><li><a href="../news/2023/20231213-2.html">南华独中舞蹈团高奏凯歌</a><time>2023-12-13</time></li><li><a href="../news/2022/20221001-1.html">恭贺·南华独中舞蹈团·凭借《神采飞扬》荣获</a><time>2022-10-01</time></li><li><a href="../news/2020/20200206-1.html">昨天我校华乐团、二十四节令鼓、舞蹈团</a><time>2020-02-06</time></li></ul><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9041.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9041.webp" width="885" height="429" alt="华乐团" loading="lazy"><span class="lab"><b>华乐团</b><i>Chinese Orchestra Club</i></span></button><div class="more" hidden><h3>华乐团</h3><p class="fl">Kelab Orkestra Cina ｜ Chinese Orchestra Club</p><p class="rel">新闻馆相关报道（共 10 篇）</p><ul><li><a href="../news/2020/20200206-1.html">昨天我校华乐团、二十四节令鼓、舞蹈团</a><time>2020-02-06</time></li><li><a href="../news/2018/20180801-3.html">再次恭喜本校华乐团在7年的努力之下终于获得“春蕾”音乐节双金奖</a><time>2018-08-01</time></li><li><a href="../news/2018/20180725-2.html">恭喜本校华乐团代表在槟城的春蕾华乐比赛中，合奏和敲击队都夺下了金奖</a><time>2018-07-25</time></li></ul><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>中华武术</b></span></button><div class="more" hidden><h3>中华武术</h3></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9059.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9059.webp" width="885" height="473" alt="童军团" loading="lazy"><span class="lab"><b>童军团</b><i>School Scout</i></span></button><div class="more" hidden><h3>童军团</h3><p class="fl">Pengakap Sekolah ｜ School Scout</p><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9053.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9053.webp" width="885" height="473" alt="圣约翰救伤队" loading="lazy"><span class="lab"><b>圣约翰救伤队</b><i>St John's Ambulance</i></span></button><div class="more" hidden><h3>圣约翰救伤队</h3><p class="fl">Persatuan St. John ｜ St John's Ambulance</p><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>少狮会</b></span></button><div class="more" hidden><h3>少狮会</h3></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>学长团</b></span></button><div class="more" hidden><h3>学长团</h3><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2025/20251207-1.html">南华独中宿舍高三欢送会·百人合唱献学长姐祝福</a><time>2025-12-07</time></li><li><a href="../news/2021/20210109-2.html">学长们协助新生入住郭元福楼，进行观察</a><time>2021-01-09</time></li></ul></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>图书馆服务团</b></span></button><div class="more" hidden><h3>图书馆服务团</h3></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2024/img/20240211-1-0.jpg" aria-haspopup="dialog"><img src="../news/2024/img/20240211-1-0.jpg" width="1600" height="900" alt="宿舍自治委员会" loading="lazy"><span class="lab"><b>宿舍自治委员会</b></span></button><div class="more" hidden><h3>宿舍自治委员会</h3><p class="rel">新闻馆相关报道（共 6 篇）</p><ul><li><a href="../news/2024/20240211-1.html">宿舍自治委员会·办新春晚宴贺甲辰龙年</a><time>2024-02-11</time></li><li><a href="../news/2023/20230128-2.html">南华独中宿舍自治会办新春宴</a><time>2023-01-28</time></li><li><a href="../news/2023/20230124-1.html">南华独中宿舍自治会办新春晚宴贺癸卯年</a><time>2023-01-24</time></li></ul><p class="cr">图：新闻馆 2024-02-11</p></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>舞台艺术设计与技术学会</b></span></button><div class="more" hidden><h3>舞台艺术设计与技术学会</h3></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>公关社</b></span></button><div class="more" hidden><h3>公关社</h3></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>南华小尖兵</b></span></button><div class="more" hidden><h3>南华小尖兵</h3><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2022/20220317-1.html">于二月杪举办的“环球探险小尖兵”已圆满结束</a><time>2022-03-17</time></li><li><a href="../news/2022/20220221-1.html">“环球探险小尖兵”倒数四天</a><time>2022-02-21</time></li></ul></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9071.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9071.webp" width="885" height="473" alt="农业与科技学会" loading="lazy"><span class="lab"><b>农业与科技学会</b><i>Agriculture & Technology Club</i></span></button><div class="more" hidden><h3>农业与科技学会</h3><p class="fl">Kelab Pertanian & Teknologi ｜ Agriculture & Technology Club</p><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2025/20250709-1.html">全马中学首创·开展2025年社会责任行动计划</a><time>2025-07-09</time></li></ul><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>中华文化及艺术学会</b></span></button><div class="more" hidden><h3>中华文化及艺术学会</h3><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2025/20250709-1.html">全马中学首创·开展2025年社会责任行动计划</a><time>2025-07-09</time></li></ul></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>棋社</b></span></button><div class="more" hidden><h3>棋社</h3><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2024/20240825-1.html">南华独中学生棋艺卓越·包揽爱大华象棋赛前五名</a><time>2024-08-25</time></li></ul></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>马来西亚多元文化学会</b></span></button><div class="more" hidden><h3>马来西亚多元文化学会</h3></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>摄影学会</b></span></button><div class="more" hidden><h3>摄影学会</h3><p class="rel">新闻馆相关报道（共 23 篇）</p><ul><li><a href="../news/2026/20260416-2.html">请大家支持本校摄影学会_爱大华新村_《19_07</a><time>2026-04-16</time></li><li><a href="../news/2026/20260416-4.html">请大家支持本校摄影学会_甘文阁新村_《阳光面线》入围前30强，点击链接按赞支持</a><time>2026-04-16</time></li><li><a href="../news/2026/20260311-1.html">观看岛屿：书写、摄影与营造</a><time>2026-03-11</time></li></ul></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>扯铃学会</b></span></button><div class="more" hidden><h3>扯铃学会</h3><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2025/20250709-1.html">全马中学首创·开展2025年社会责任行动计划</a><time>2025-07-09</time></li></ul></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9083.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9083.webp" width="885" height="473" alt="射箭学会" loading="lazy"><span class="lab"><b>射箭学会</b><i>Archery Club</i></span></button><div class="more" hidden><h3>射箭学会</h3><p class="fl">Kelab Memanah ｜ Archery Club</p><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2024/img/20240703-1-0.jpg" aria-haspopup="dialog"><img src="../news/2024/img/20240703-1-0.jpg" width="1027" height="605" alt="合唱团" loading="lazy"><span class="lab"><b>合唱团</b></span></button><div class="more" hidden><h3>合唱团</h3><p class="rel">新闻馆相关报道（共 4 篇）</p><ul><li><a href="../news/2025/20251207-1.html">南华独中宿舍高三欢送会·百人合唱献学长姐祝福</a><time>2025-12-07</time></li><li><a href="../news/2024/20240715-1.html">隆雪华堂办合唱团赛·南华独中夺优秀奖</a><time>2024-07-15</time></li><li><a href="../news/2024/20240703-1.html">南华独中合唱团初战告捷·凭借《手印》传神歌颂父母恩情</a><time>2024-07-03</time></li></ul><p class="cr">图：新闻馆 2024-07-03</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9047.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9047.webp" width="865" height="473" alt="剧场艺术学会" loading="lazy"><span class="lab"><b>剧场艺术学会</b><i>Theater Society</i></span></button><div class="more" hidden><h3>剧场艺术学会</h3><p class="fl">Kelab Drama ｜ Theater Society</p><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2022/img/20220729-1-0.jpg" aria-haspopup="dialog"><img src="../news/2022/img/20220729-1-0.jpg" width="1131" height="1600" alt="电影学会" loading="lazy"><span class="lab"><b>电影学会</b></span></button><div class="more" hidden><h3>电影学会</h3><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2022/20220729-1.html">电影分享会 ①·Le Petit Prince 小王子</a><time>2022-07-29</time></li><li><a href="../news/2025/20250517-1.html">与梦想 与热忱·与南华独中好好再一起</a><time>2025-05-17</time></li></ul><p class="cr">图：新闻馆 2022-07-29</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2024/img/20240518-1-0.jpg" aria-haspopup="dialog"><img src="../news/2024/img/20240518-1-0.jpg" width="1600" height="1066" alt="篮球培训队" loading="lazy"><span class="lab"><b>篮球培训队</b></span></button><div class="more" hidden><h3>篮球培训队</h3><p class="rel">新闻馆相关报道（共 15 篇）</p><ul><li><a href="../news/2025/20250524-2.html">南华独中篮球校队双双勇夺季军</a><time>2025-05-24</time></li><li><a href="../news/2024/20240523-1.html">南华独中男女篮球队·曼绒学联赛分夺亚季军</a><time>2024-05-23</time></li><li><a href="../news/2024/20240518-1.html">南华独立中学篮球校队·曼绒县学联篮球赛上取得佳绩</a><time>2024-05-18</time></li></ul><p class="cr">图：新闻馆 2024-05-18</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2019/img/20190128-2-0.jpg" aria-haspopup="dialog"><img src="../news/2019/img/20190128-2-0.jpg" width="1600" height="1067" alt="羽球培训队" loading="lazy"><span class="lab"><b>羽球培训队</b></span></button><div class="more" hidden><h3>羽球培训队</h3><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2019/20190128-2.html">在2019年度曼绒学联羽球赛，本校校队也在赛场上有所斩获，希望他们来年继续努力，摘下桂冠</a><time>2019-01-28</time></li><li><a href="../news/2018/20180322-1.html">第一学期成就回顾·项目：MSSD Manjung 羽球比赛</a><time>2018-03-22</time></li></ul><p class="cr">图：新闻馆 2019-01-28</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../assets/img/cocurricular/p20_x9077.webp" aria-haspopup="dialog"><img src="../assets/img/cocurricular/p20_x9077.webp" width="885" height="473" alt="乒乓培训队" loading="lazy"><span class="lab"><b>乒乓培训队</b></span></button><div class="more" hidden><h3>乒乓培训队</h3><p class="cr">图：2027 南华独中简介手册</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2024/img/20241216-2-0.jpg" aria-haspopup="dialog"><img src="../news/2024/img/20241216-2-0.jpg" width="1600" height="1066" alt="游泳培训队" loading="lazy"><span class="lab"><b>游泳培训队</b></span></button><div class="more" hidden><h3>游泳培训队</h3><p class="rel">新闻馆相关报道（共 16 篇）</p><ul><li><a href="../news/2025/20251125-1.html">南华独中办丹斯里颜清文杯游泳赛</a><time>2025-11-25</time></li><li><a href="../news/2024/20241216-2.html">南华独中首届丹斯里颜清文杯游泳比赛</a><time>2024-12-16</time></li><li><a href="../news/2024/20240710-1.html">曼绒县游泳学联赛·南华独中斩获8银3铜</a><time>2024-07-10</time></li></ul><p class="cr">图：新闻馆 2024-12-16</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2025/img/20250530-2-0.jpg" aria-haspopup="dialog"><img src="../news/2025/img/20250530-2-0.jpg" width="1080" height="540" alt="排球培训队" loading="lazy"><span class="lab"><b>排球培训队</b></span></button><div class="more" hidden><h3>排球培训队</h3><p class="rel">新闻馆相关报道（共 7 篇）</p><ul><li><a href="../news/2025/20250530-2.html">狂贺·恭喜南华独中排球选手詹茗琋</a><time>2025-05-30</time></li><li><a href="../news/2019/20190304-1.html">本校黄玟杰（高三礼）和陈浚豪(高二礼）在2019年全霹雳学联排球赛中帮助曼绒县夺下亚军</a><time>2019-03-04</time></li><li><a href="../news/2018/20180815-1.html">恭喜高一礼班的陈浚豪在2018年的全国学联排球赛中帮助霹雳州队拿下了全国亚军</a><time>2018-08-15</time></li></ul><p class="cr">图：新闻馆 2025-05-30</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2018/img/20180801-2-0.jpg" aria-haspopup="dialog"><img src="../news/2018/img/20180801-2-0.jpg" width="1066" height="1600" alt="辩论培训队" loading="lazy"><span class="lab"><b>辩论培训队</b></span></button><div class="more" hidden><h3>辩论培训队</h3><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2018/20180801-2.html">恭喜马咏怡、王维喆、万子暄、陈嘉怡同学第一次参加精英大学所举办的英语辩论比赛就挺进全国赛十六强</a><time>2018-08-01</time></li><li><a href="../news/2018/20180416-3.html">本校在各运动大会上成绩亮眼，但缺乏学术上的表现难免令人感到失落</a><time>2018-04-16</time></li></ul><p class="cr">图：新闻馆 2018-08-01</p></div></figure>
   </div>
 </section>
 
@@ -275,10 +345,58 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
     </div>
   </div>
 
-  <div class="tag-grid" style="margin-top:2.6rem;">
-    <span>南华天使 · 社区关怀（2012 年成立）</span><span>河南郑州「遇见功夫」寻根之旅</span><span>云南昆明教育交流</span><span>社区美化行动</span>
+  <div class="ph-grid" style="margin-top:2.6rem;">
+    <figure class="ph"><button type="button" data-big="../news/2019/img/20191209-3-0.jpg" aria-haspopup="dialog"><img src="../news/2019/img/20191209-3-0.jpg" width="901" height="960" alt="南华天使 · 社区关怀（2012 年成立）" loading="lazy"><span class="lab"><b>南华天使 · 社区关怀（2012 年成立）</b></span></button><div class="more" hidden><h3>南华天使 · 社区关怀（2012 年成立）</h3><p class="rel">新闻馆相关报道（共 15 篇）</p><ul><li><a href="../news/2019/20191213-1.html">南华天使平安抵达KLIA2</a><time>2019-12-13</time></li><li><a href="../news/2019/20191212-1.html">今天南华天使们与五杰学校的学生一起上课并体验不同的教学方式</a><time>2019-12-12</time></li><li><a href="../news/2019/20191212-2.html">今天南华天使们与五杰学校的学生一起上课并体验不同的教学方式</a><time>2019-12-12</time></li></ul><p class="cr">图：新闻馆 2019-12-09</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2023/img/20230816-1-0.jpg" aria-haspopup="dialog"><img src="../news/2023/img/20230816-1-0.jpg" width="960" height="871" alt="河南郑州「遇见功夫」寻根之旅" loading="lazy"><span class="lab"><b>河南郑州「遇见功夫」寻根之旅</b></span></button><div class="more" hidden><h3>河南郑州「遇见功夫」寻根之旅</h3><p class="cr">图：新闻馆 2023-08-16</p></div></figure>
+    <figure class="ph"><button type="button" data-big="../news/2019/img/20191205-1-0.jpg" aria-haspopup="dialog"><img src="../news/2019/img/20191205-1-0.jpg" width="1048" height="473" alt="云南昆明教育交流" loading="lazy"><span class="lab"><b>云南昆明教育交流</b></span></button><div class="more" hidden><h3>云南昆明教育交流</h3><p class="rel">新闻馆相关报道</p><ul><li><a href="../news/2019/20191211-1.html">今早南华天使到昆明海东湿地公园晨运及欣赏湿地公园的生态环境</a><time>2019-12-11</time></li><li><a href="../news/2019/20191209-1.html">南华天使与中国昆明五杰学校的孩子一起运动</a><time>2019-12-09</time></li><li><a href="../news/2019/20191205-1.html">南华天使在昆明五杰学校与学生互动交流</a><time>2019-12-05</time></li></ul><p class="cr">图：新闻馆 2019-12-05</p></div></figure>
+    <figure class="ph is-empty"><button type="button" aria-haspopup="dialog"><span class="ph-empty">资料整理中</span><span class="lab"><b>社区美化行动</b></span></button><div class="more" hidden><h3>社区美化行动</h3></div></figure>
   </div>
 </section>
+
+<dialog id="lb" aria-label="活动详情"><button type="button" class="x" aria-label="关闭">×</button><img alt=""><div class="txt"></div></dialog>
+<script>
+// 入口照片格 → 等高行（Flickr justified rows）：每组照片按原比例分行，求各行高度最接近目标行高，再整行撑满宽度
+(function(){
+  var GAP=14, PAD=14;                       // 卡片间距；卡纸框左右内距+边框合计（6+6+1+1）
+  function layout(grid){
+    var figs=[].slice.call(grid.querySelectorAll(':scope > .ph')), W=grid.getBoundingClientRect().width-.1;   // 用小数宽度：clientWidth 会四舍五入，多 0.3px 就整张掉到下一行
+    grid.querySelectorAll(':scope > .br').forEach(function(b){ b.remove(); });
+    if(!W) return;
+    var target = W < 560 ? 130 : 210, maxH = target*1.25;   // 全页行高上限：照片少的组宁可不满行，也不放大到跟别组差一截
+    var ar = figs.map(function(f){ var i=f.querySelector('img'); return i ? i.getAttribute('width')/i.getAttribute('height') : 4/3; });
+    var n=ar.length, best=[0], cut=[0];
+    function rowH(i,j){ var s=0; for(var k=i;k<j;k++) s+=ar[k]; return (W-GAP*(j-i-1)-PAD*(j-i))/s; }
+    for(var j=1;j<=n;j++){ best[j]=Infinity;
+      for(var i=0;i<j;i++){ var h=rowH(i,j), c=best[i]+Math.pow(Math.log(h/target),2)+(h>maxH?4*Math.pow(Math.log(h/maxH),2):0); // 对数差：太高太矮一样罚；会被封顶（不满行）的再加罚
+        if(h<target*.55) continue; if(c<best[j]){ best[j]=c; cut[j]=i; } }
+      if(best[j]===Infinity){ best[j]=best[j-1]+9; cut[j]=j-1; } }
+    var rows=[]; for(var e=n; e>0; e=cut[e]) rows.unshift([cut[e],e]);
+    rows.forEach(function(r,ri){
+      var h=Math.min(rowH(r[0],r[1]), maxH);   // 封顶后整行不满就左对齐
+            for(var k=r[0];k<r[1];k++){ figs[k].style.width=(ar[k]*h+PAD-.02)+'px';
+        var im=figs[k].querySelector('img, .ph-empty'); if(im) im.style.height=h+'px'; }   // 整行图高写成同一个值，宽度不取整，右缘才对得齐
+      if(ri<rows.length-1){ var br=document.createElement('span'); br.className='br'; figs[r[1]-1].after(br); }
+    });
+    grid.classList.add('is-justified');
+  }
+  var grids=document.querySelectorAll('.ph-grid');
+  function all(){ grids.forEach(layout); }
+  all();
+  if('ResizeObserver' in window){ var last=0; new ResizeObserver(function(){
+    var w=grids[0]&&grids[0].getBoundingClientRect().width; if(w!==last){ last=w; all(); } }).observe(document.body); }
+})();
+</script>
+<script>
+// 入口照片格 → 灯箱：大图＋卡片里预埋的说明与相关报道
+(function(){ var lb=document.getElementById('lb'); if(!lb||!lb.showModal) return;
+  var im=lb.querySelector('img'), tx=lb.querySelector('.txt');
+  document.querySelectorAll('.ph > button').forEach(function(b){ b.addEventListener('click', function(){
+    var big=b.dataset.big; im.hidden=!big; if(big){ im.src=big; im.alt=b.querySelector('b').textContent; }
+    tx.innerHTML=b.nextElementSibling.innerHTML; lb.showModal(); lb.scrollTop=0; }); });
+  lb.querySelector('.x').addEventListener('click', function(){ lb.close(); });
+  lb.addEventListener('click', function(e){ if(e.target===lb) lb.close(); });
+})();
+</script>
 
 <footer>© 2026 曼绒县南华独立中学</footer>
 

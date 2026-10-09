@@ -142,24 +142,28 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
   .family-nav a { flex:none; }
 }
 
-/* ===== 入口照片格（10-10 样板，依 2027 简介手册语法：一个项目＝一张照片＋左下红标签，点开看大图与相关报道）=====
-   照片按原比例排（masonry 不裁切）；手机两栏、桌面最多四栏 */
-.ph-grid { columns:4 150px; column-gap:.75rem; }
-.ph { break-inside:avoid; margin:0 0 .75rem; }
-.ph > button { display:block; position:relative; width:100%; padding:0; border:0; background:var(--mount); cursor:zoom-in;
-  border-radius:10px; overflow:hidden; box-shadow:0 4px 12px rgba(90,60,20,.16); font:inherit; color:inherit; text-align:left; }
-.ph img { display:block; width:100%; height:auto; transition:transform .5s cubic-bezier(.16,1,.3,1); }
-.ph > button:hover img { transform:scale(1.04); }
-.ph > button:focus-visible { outline:3px solid var(--gold); outline-offset:2px; }
-.ph .lab { position:absolute; left:.5rem; bottom:.5rem; max-width:calc(100% - 1rem); background:#C8302A; color:#fff;
-  padding:.22rem .55rem .26rem; border-radius:3px; line-height:1.35; box-shadow:0 2px 6px rgba(0,0,0,.25); }
-.ph .lab b { display:block; font-size:.82rem; font-weight:700; letter-spacing:.04em; }
-.ph .lab i { display:block; font-style:normal; font-size:.6rem; opacity:.92; letter-spacing:.02em; }
-.ph.is-empty > button { aspect-ratio:4/3; cursor:pointer; border:1px dashed var(--rule); box-shadow:none; }
-.ph-empty { position:absolute; inset:0; display:grid; place-items:center; font-size:.78rem; color:var(--muted-lt); letter-spacing:.1em; }
-@media (prefers-reduced-motion:reduce) { .ph img { transition:none; } .ph > button:hover img { transform:none; } }
+/* ===== 入口照片格（10-10 样板）=====
+   排法＝Flickr／Google Photos 的「等高行」：同一行照片等高、宽度按各自原比例，整行左右对齐——一像素不裁。
+   行怎么分由下方脚本按容器宽度算（求每行高度最接近目标行高）；没 JS 时退成普通折行。
+   外框沿用本页「领域介绍」照片的白卡纸框，图说＝衬线中文＋金色英文（同 .sec-head .en），不用手册的红标签。 */
+.ph-grid { display:flex; flex-wrap:wrap; column-gap:14px; }   /* 行距不用 row-gap：换行用的 .br 自成一行会多吃一次间距 */
+.ph-grid > .br { flex-basis:100%; height:0; }
+.ph { flex:1 1 150px; min-width:0; margin:0 0 14px; }
+.ph-grid.is-justified .ph { flex:none; }
+.ph > button { display:flex; flex-direction:column; width:100%; height:100%; padding:6px; border:1px solid var(--rule);
+  background:var(--paper); box-shadow:0 6px 16px rgba(90,60,20,.14); cursor:zoom-in; font:inherit; color:inherit; text-align:left;
+  transition:box-shadow .35s ease, transform .35s cubic-bezier(.16,1,.3,1); }
+.ph > button:hover { transform:translateY(-3px); box-shadow:0 12px 26px rgba(90,60,20,.2); }
+.ph > button:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }
+.ph img { display:block; width:100%; height:auto; }
+.ph .lab { display:block; padding:.55rem .25rem .2rem; line-height:1.4; }
+.ph .lab b { display:block; font-family:var(--serif); font-weight:700; font-size:.92rem; color:var(--ink); letter-spacing:.04em; }
+.ph .lab i { display:block; font-style:normal; font-size:.64rem; color:var(--gold); letter-spacing:.14em; margin-top:.15rem; }
+.ph-empty { display:grid; place-items:center; aspect-ratio:4/3; background:var(--mount); font-size:.76rem; color:var(--muted-lt); letter-spacing:.12em; }
+.ph.is-empty > button { cursor:pointer; }
+@media (prefers-reduced-motion:reduce) { .ph > button { transition:none; } .ph > button:hover { transform:none; } }
 
-#lb { margin:auto; width:min(920px,94vw); max-height:92vh; padding:0; border:0; border-radius:12px; background:var(--paper); color:var(--ink); overflow:auto; }
+#lb { margin:auto; width:min(920px,94vw); max-height:92vh; padding:0; border:1px solid var(--rule); border-radius:2px; background:var(--paper); color:var(--ink); overflow:auto; }
 #lb img[hidden] { display:none; }
 #lb::backdrop { background:rgba(20,15,8,.8); }
 #lb img { display:block; width:100%; max-height:62vh; object-fit:contain; background:var(--paper); }   /* 手册图自带白底圆角，底色用纸色才不露白角 */
@@ -356,6 +360,38 @@ footer { text-align:center; padding:2.5rem 1rem 3rem; font-size:.82rem; color:va
 </section>
 
 <dialog id="lb" aria-label="课程详情"><button type="button" class="x" aria-label="关闭">×</button><img alt=""><div class="txt"></div></dialog>
+<script>
+// 入口照片格 → 等高行（Flickr justified rows）：每组照片按原比例分行，求各行高度最接近目标行高，再整行撑满宽度
+(function(){
+  var GAP=14, PAD=14;                       // 卡片间距；卡纸框左右内距+边框合计（6+6+1+1）
+  function layout(grid){
+    var figs=[].slice.call(grid.querySelectorAll(':scope > .ph')), W=grid.getBoundingClientRect().width-.1;   // 用小数宽度：clientWidth 会四舍五入，多 0.3px 就整张掉到下一行
+    grid.querySelectorAll(':scope > .br').forEach(function(b){ b.remove(); });
+    if(!W) return;
+    var target = W < 560 ? 130 : 210, maxH = target*1.25;   // 全页行高上限：照片少的组宁可不满行，也不放大到跟别组差一截
+    var ar = figs.map(function(f){ var i=f.querySelector('img'); return i ? i.getAttribute('width')/i.getAttribute('height') : 4/3; });
+    var n=ar.length, best=[0], cut=[0];
+    function rowH(i,j){ var s=0; for(var k=i;k<j;k++) s+=ar[k]; return (W-GAP*(j-i-1)-PAD*(j-i))/s; }
+    for(var j=1;j<=n;j++){ best[j]=Infinity;
+      for(var i=0;i<j;i++){ var h=rowH(i,j), c=best[i]+Math.pow(Math.log(h/target),2)+(h>maxH?4*Math.pow(Math.log(h/maxH),2):0); // 对数差：太高太矮一样罚；会被封顶（不满行）的再加罚
+        if(h<target*.55) continue; if(c<best[j]){ best[j]=c; cut[j]=i; } }
+      if(best[j]===Infinity){ best[j]=best[j-1]+9; cut[j]=j-1; } }
+    var rows=[]; for(var e=n; e>0; e=cut[e]) rows.unshift([cut[e],e]);
+    rows.forEach(function(r,ri){
+      var h=Math.min(rowH(r[0],r[1]), maxH);   // 封顶后整行不满就左对齐
+            for(var k=r[0];k<r[1];k++){ figs[k].style.width=(ar[k]*h+PAD-.02)+'px';
+        var im=figs[k].querySelector('img, .ph-empty'); if(im) im.style.height=h+'px'; }   // 整行图高写成同一个值，宽度不取整，右缘才对得齐
+      if(ri<rows.length-1){ var br=document.createElement('span'); br.className='br'; figs[r[1]-1].after(br); }
+    });
+    grid.classList.add('is-justified');
+  }
+  var grids=document.querySelectorAll('.ph-grid');
+  function all(){ grids.forEach(layout); }
+  all();
+  if('ResizeObserver' in window){ var last=0; new ResizeObserver(function(){
+    var w=grids[0]&&grids[0].getBoundingClientRect().width; if(w!==last){ last=w; all(); } }).observe(document.body); }
+})();
+</script>
 <script>
 // 入口照片格 → 灯箱：大图＋卡片里预埋的说明与相关报道
 (function(){ var lb=document.getElementById('lb'); if(!lb||!lb.showModal) return;

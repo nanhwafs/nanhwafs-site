@@ -1,0 +1,13 @@
+.git/
+.gitignore
+.claude/
+
+/*.md
+README.md
+PLAN.md
+sitemap.md
+南华官网建设与维护指南.md
+scripts/
+_design/
+data/
+templates/
